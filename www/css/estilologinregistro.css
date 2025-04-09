@@ -1,0 +1,88 @@
+body {
+    background-image: url("../imagenes/tejido.jpg");
+    background-repeat: no-repeat;
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    background-position: center; /* Centra la imagen en la pantalla */
+    height: 100vh; /* 100% de la altura de la ventana */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff; /* Fondo blanco para el contenedor */
+}
+
+.card-header {
+    background-color: blue;
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 20px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.form-control {
+    border-radius: 25px;
+    border: 2px solid #0072ff;
+    padding: 15px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 90%; /* Esto asegura que el input ocupe todo el ancho disponible */
+}
+
+.form-control:focus {
+    border-color: #00c6ff;
+    box-shadow: 0px 0px 10px rgba(0, 198, 255, 0.5);
+}
+
+.btn-primary {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    width: 50%; /* El ancho se mantiene en 50% */
+    margin: 0 auto; /* Esto centrará el botón horizontalmente */
+    display: block; /* Hace que el botón sea un bloque para que se pueda centrar */
+    text-align: center; /* Asegura que el texto del botón esté centrado */
+}
+
+
+.btn-primary:hover {
+    background-color: #66cc66;
+}
+
+.card-footer {
+    text-align: center;
+    background-color: transparent;
+    padding: 15px 0;
+}
+
+.card-footer a {
+    color: #0072ff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.card-footer a:hover {
+    text-decoration: underline;
+}
+
+.form-label {
+    text-align: center;
+    display: block;
+}
