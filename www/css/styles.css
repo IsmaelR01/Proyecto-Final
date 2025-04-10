@@ -11,14 +11,14 @@ body {
 }
 .navbar {
     background-color: black;
-    margin-top: 0; /* Elimina cualquier margen superior */
-    padding-top: 0; /* Elimina el relleno superior */
+    margin-top: 0; 
+    padding-top: 0; 
 }
 
 .navbar-logo {
-    max-height: 50px; /* Ajusta el alto máximo según el tamaño de la barra de navegación */
-    width: auto; /* Mantiene las proporciones del logo */
-    margin-right: 20px; /* Espaciado entre el logo y el resto de la barra */
+    max-height: 50px;   
+    width: auto; 
+    margin-right: 20px; 
 }
 
 .navbar-dark .navbar-nav .nav-link {

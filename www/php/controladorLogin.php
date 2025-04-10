@@ -31,10 +31,10 @@ if (filter_has_var(INPUT_POST, 'sesion')) {
                     $_SESSION['rol'] = $rol;
                     switch ($rol) {
                         case 'admin':
-                            header('Location: ../index.html');
+                            header('Location: ../index.php');
                             break;
                         case 'cliente':
-                            header('Location: ../index.html');
+                            header('Location: ../index.php');
                             break;
                     }
                 } else {
