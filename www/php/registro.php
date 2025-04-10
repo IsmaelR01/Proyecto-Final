@@ -20,17 +20,22 @@
         <div class="card-body">
             <form action="controladorRegistro.php" method="post">
                 <div class="mb-3">
-                    <label for="dni" class="form-label">Introduce el DNI</label>
+                    <label for="dni" class="form-label">Introduce el DNI</label><br>
                     <input type="text" class="form-control" id="dni" name="dni" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="usuario" class="form-label">Introduce el usuario</label>
+                    <label for="usuario" class="form-label">Introduce el usuario</label><br>
                     <input type="text" class="form-control" id="usuario" name="usuario" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="contrasena" class="form-label">Introduce la contraseña</label>
+                    <label for="email" class="form-label">Introduce el email</label><br>
+                    <input type="text" class="form-control" id="email" name="email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="contrasena" class="form-label">Introduce la contraseña</label><br>
                     <input type="password" class="form-control" id="contrasena" name="contrasena" required>
                 </div>
 

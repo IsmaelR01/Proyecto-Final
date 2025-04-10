@@ -7,9 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Primero validamos los datos ingresados
     $dni = validarDni(filter_input(INPUT_POST, 'dni'));
     $usuario = validarUsuario(filter_input(INPUT_POST, 'usuario'));
+    $email = validarEmail(filter_input(INPUT_POST, 'email'));
     $contrasena = validarContrasena(filter_input(INPUT_POST, 'contrasena'));
 
-    if (!$dni || !$usuario || !$contrasena) {
+    if (!$dni || !$usuario || !$email || !$contrasena) {
         // Si los datos no son válidos, redirige directamente
         $mensaje = "Los datos que has introducido no son válidos";
     } else {
