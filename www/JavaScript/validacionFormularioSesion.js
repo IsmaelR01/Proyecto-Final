@@ -5,20 +5,25 @@ function iniciar() {
     enviar.addEventListener('click',validar,false);
 }
 
-function validar(eventopordefecto) {
-    let devolver="";
+function validar(eventoPorDefecto) {
     const resultado = document.getElementById('resultado');
-    resultado.innerHTML= "";
-    if (validarUsuario() & validarContrasena()) {
-        eventopordefecto.preventDefault();
-        devolver = true;
-        console.log(eventopordefecto.target);
+    resultado.innerHTML = "";
+
+    let usuarioValido = validarUsuario();
+    let contrasenaValida = validarContrasena();
+
+    let formularioValido = false;
+
+    if (usuarioValido  && contrasenaValida) {
+        formularioValido = true;
     } else {
-        eventopordefecto.preventDefault();
-        devolver = false; 
+        eventoPorDefecto.preventDefault();
+        formularioValido = false;
     }
-    return devolver;
+
+    return formularioValido;
 }
+
 
 function validarUsuario() {
     let nombreUsuario = document.getElementById('usuario').value;

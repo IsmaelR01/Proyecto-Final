@@ -6,12 +6,12 @@ INSERT INTO Roles (tipo) VALUES
 ('cliente');
 
 INSERT INTO Usuarios (dni, nombre_usuario, clave, direccion, email, id_rol) VALUES
-('12345678A', 'Administrador', 'Adminsecurity.2025', 'Calle Salvador Dalí, 19, 04500 Fiñana, Almería', 'admin@gmail.com', 1),
-('23456789B', 'Antonior73', 'Camisetas.2000', 'Calle Gran Vía, 23, 28013 Madrid', 'antoniorodriguez@gmail.com', 2),
-('34567890C', 'Juang34', 'Holacaracola', 'Calle de la Paz, 45, 29008 Málaga', 'juangarcia@gmail.com', 2),
-('45678901D', 'Cristiv01', 'Chinchetas.1998', 'Calle Mayor, 12, 03001 Alicante', 'cristinavallejo@gmail.com', 2),
-('56789012E', 'Martac01', 'Brillo2024', 'Avenida del Puerto, 45, 46001 Valencia', 'martacarvajal@gmail.com', 2),
-('67890123F', 'Manolillo01', 'Fuego.2025', 'Calle Luna, 7, 41001 Sevilla', 'manolomartinez@gmail.com', 2);
+('12345678A', 'Admin01', '$2y$12$KQnoDbyzcsg.BdIygtufZexcaWJ9JHdSuTskxVdeRkfFIczAiAnRq', 'Calle Salvador Dalí, 19, 04500 Fiñana, Almería', 'admin@gmail.com', 1),
+('23456789B', 'Antonior73', '$2y$12$q0CX9LmUhxx99/F0f3hB/O/N1qVIXLVCf3fsNmanZRQgTYIFVXsEa', 'Calle Gran Vía, 23, 28013 Madrid', 'antoniorodriguez@gmail.com', 2),
+('34567890C', 'Juang34', '$2y$12$eGzBoNIiIczg.4JUUwjPMOdIZTWHvEPqEcrqF3DJvQb.KxS1MKAU.', 'Calle de la Paz, 45, 29008 Málaga', 'juangarcia@gmail.com', 2),
+('45678901D', 'Cristiv01', '$2y$12$2uWpwFVsp7MqCog7gV59Ie/vuzGbH1iWcM/O7X8ya95lPtSNFhdO2', 'Calle Mayor, 12, 03001 Alicante', 'cristinavallejo@gmail.com', 2),
+('56789012E', 'Martac01', '$2y$12$HNHiW3OpJBUqz0UHa2XB6OwBRb2REleodsl7Zp2.83nQFCt8/lyge', 'Avenida del Puerto, 45, 46001 Valencia', 'martacarvajal@gmail.com', 2),
+('67890123F', 'Manolillo01', '$2y$12$wk6dNlwFeL0rPr5LdyaPzOXv38EZu4rA2eH2O6lt/W5E7./8FQWfq', 'Calle Luna, 7, 41001 Sevilla', 'manolomartinez@gmail.com', 2);
 
 INSERT INTO Productos (cod_producto, nombre, modelo, descripcion) VALUES
 ('J1000', 'Jersey Punto Algodón Rojo', 2024, 'Jersey de punto confeccionado en algodón 100% orgánico, color rojo intenso. Corte clásico con cuello redondo y puños acanalados. Ideal para entretiempo.'),

@@ -31,8 +31,17 @@ session_start();
 
                 <button type="submit" id="enviar" name="sesion" class="btn btn-primary">Iniciar Sesión</button><br>
 
-                <!-- Div para mostrar errores -->
-                <div id="resultado" style="color: red; margin-bottom: 10px;"></div>
+                <?php if (isset($_SESSION['mensaje_error'])) { ?>
+                    <div id="resultado" style="color: red; margin-bottom: 10px;">
+                        <?php
+                        echo $_SESSION['mensaje_error'];
+                        unset($_SESSION['mensaje_error']);
+                        ?>
+                    </div>
+                <?php }else { ?>
+                    <div id="resultado" style="color: red; margin-bottom: 10px;"></div>
+                <?php } ?>
+
             </form>
         </div>
         <div class="card-footer">

@@ -59,6 +59,8 @@ if (isset($_SESSION['usuario'])) {
         $_SESSION['acceso'] = time() + 1200; 
     }
 }
-if (isset($mensaje)) { 
-    echo $mensaje; 
+if (isset($mensaje)) {
+    $_SESSION['mensaje_error'] = $mensaje;
+    header('Location: login.php');
+    exit;
 } ?>

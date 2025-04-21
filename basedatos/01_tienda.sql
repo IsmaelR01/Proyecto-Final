@@ -9,7 +9,7 @@ USE tienda;
 CREATE TABLE IF NOT EXISTS Roles (
     id_rol INT PRIMARY KEY AUTO_INCREMENT,
     tipo VARCHAR(20) NOT NULL
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
+);
 
 -- Crear la tabla Usuarios con codificación y colación utf8mb4
 CREATE TABLE IF NOT EXISTS Usuarios (
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     email VARCHAR(30),
     id_rol INT,
     FOREIGN KEY (id_rol) REFERENCES Roles(id_rol) ON UPDATE CASCADE ON DELETE RESTRICT
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
+);
 
 -- Crear la tabla Productos con codificación y colación utf8mb4
 CREATE TABLE IF NOT EXISTS Productos (
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS Productos (
     nombre VARCHAR(40) NOT NULL,
     modelo MediumInt NOT NULL,
     descripcion TEXT
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
+);
 
 -- Crear la tabla Proveedores con codificación y colación utf8mb4
 CREATE TABLE IF NOT EXISTS Proveedores (
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Proveedores (
     telefono VARCHAR(20),
     cod_producto CHAR(5) NOT NULL,
     FOREIGN KEY (cod_producto) REFERENCES Productos(cod_producto) ON UPDATE CASCADE ON DELETE RESTRICT
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
+);
 
 -- Crear la tabla Compran con codificación y colación utf8mb4
 CREATE TABLE IF NOT EXISTS Compran (
@@ -47,4 +47,4 @@ CREATE TABLE IF NOT EXISTS Compran (
     PRIMARY KEY (dni, cod_producto),
     FOREIGN KEY (dni) REFERENCES Usuarios(dni) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (cod_producto) REFERENCES Productos(cod_producto) ON UPDATE CASCADE ON DELETE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
+);

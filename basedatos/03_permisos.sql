@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON tienda.* TO 'ismael'@'%';
+FLUSH PRIVILEGES;

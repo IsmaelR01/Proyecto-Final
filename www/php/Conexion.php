@@ -22,6 +22,8 @@ class Conexion {
         if (self::$conexion == null) {
             try {
                 self::$conexion = new mysqli(self::$host,self::$usuario,self::$password,self::$baseDatos);
+                self::$conexion->set_charset("utf8mb4");
+                self::$conexion->query("SET collation_connection = 'utf8mb4_spanish_ci'");
             } catch (Exception $e) {
                 $mensaje = "Error: " . $e->getMessage();
             }
