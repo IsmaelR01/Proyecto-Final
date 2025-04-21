@@ -12,8 +12,7 @@
         </div>
 
         <div class="ms-3 me-3 mt-2">
-            <?php if (isset($_SESSION['usuario'])): ?>
-                <!-- Dropdown con perfil -->
+            <?php if (isset($_SESSION['usuario'])) { ?>
                 <div class="dropdown">
                     <a class="btn btn-outline-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="perfilDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="imagenes/emoticono.jpg" alt="Perfil" class="rounded-circle me-2" width="32" height="32">
@@ -23,11 +22,11 @@
                         <li><a class="dropdown-item text-danger" href="php/logout.php">Cerrar sesión</a></li>
                     </ul>
                 </div>
-            <?php else: ?>
+            <?php  } else { ?>
                 <a href="php/login.php">
                     <button type="button" class="btn btn-primary">Iniciar Sesión</button>
                 </a>
-            <?php endif; ?>
+            <?php } ?>
         </div>
 
         <button class="navbar-toggler ms-auto me-2" type="button" data-bs-toggle="collapse" data-bs-target="#barraNavegacion">

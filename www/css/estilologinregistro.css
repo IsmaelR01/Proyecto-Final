@@ -3,13 +3,13 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    min-height: 100vh; /* Cambiado de height a min-height */
+    min-height: 100vh; 
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Ya no centramos verticalmente */
+    align-items: flex-start; 
     margin: 0;
-    padding: 40px 0; /* Espacio arriba y abajo */
-    overflow-y: auto; /* Habilita scroll si el contenido es alto */
+    padding: 40px 0; 
+    overflow-y: auto; 
 }
 
 .card {
@@ -18,7 +18,7 @@ body {
     width: 100%;
     max-width: 400px;
     background-color: #ffffff;
-    overflow: hidden; /* Asegura que el contenido se mantenga dentro */
+    overflow: hidden; 
 }
 
 .card-header {
@@ -88,3 +88,12 @@ body {
     text-align: center;
     display: block;
 }
+
+.error {
+    border: 2px solid red;
+}
+
+.exito {
+    border: 2px solid green;
+}
+
