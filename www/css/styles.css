@@ -95,4 +95,14 @@ main {
     font-size: 1.25rem; /* Cambia el tamaño aquí */
 }
 
+.product-img {
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+    border-radius: 8px;
+}
+
+
 

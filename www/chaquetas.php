@@ -2,7 +2,7 @@
 session_start();
 require_once 'php/Conexion.php';
 $conexionBaseDatos = Conexion::conexionBD();
-$busqueda = 'J%';
+$busqueda = 'C%';
 $consultaProducto = $conexionBaseDatos->prepare("SELECT cod_producto, nombre, imagen FROM Productos WHERE cod_producto like ?");
 $consultaProducto->bind_param("s", $busqueda);
 $consultaProducto->execute();
@@ -25,7 +25,7 @@ $resultado = $consultaProducto->get_result();
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Jerseys</li>
+                <li class="breadcrumb-item active" aria-current="page">Chaquetas</li>
             </ol>
         </nav>
 

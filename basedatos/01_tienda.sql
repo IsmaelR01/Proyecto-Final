@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS Productos (
     cod_producto CHAR(5) PRIMARY KEY,
     nombre VARCHAR(40) NOT NULL,
     modelo MediumInt NOT NULL,
-    descripcion TEXT
+    descripcion TEXT,
+    imagen VARCHAR(255)
 );
 
 -- Crear la tabla Proveedores con codificación y colación utf8mb4
