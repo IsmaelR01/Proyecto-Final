@@ -26,6 +26,13 @@ body {
     margin: 0 15px; 
 }
 
+.navbar-nav > .nav-item > .nav-link:hover {
+    background-color: #0d6efd;
+    color: white !important;
+    transition: background-color 0.3s ease;
+}
+
+
 .navbar-nav {
     width: 100%;
     display: flex;
@@ -66,4 +73,26 @@ main {
         height: 250px; 
     }
 }
+
+#productos {
+    position: relative;
+}
+
+.submenu-productos {
+    display: none;
+    position: absolute;
+    top: 100%; /* Esto lo coloca justo debajo del enlace "Productos" */
+    left: 0;
+    background-color: #111;
+    padding: 10px;
+    min-width: 150px;
+    z-index: 1000;
+    border: 1px solid #333;
+    border-radius: 4px;
+}
+
+.breadcrumb {
+    font-size: 1.25rem; /* Cambia el tamaño aquí */
+}
+
 

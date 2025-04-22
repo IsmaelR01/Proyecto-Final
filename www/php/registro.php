@@ -1,6 +1,5 @@
 <?php
-// Aquí puedes incluir tu sesión si es necesario, como en el caso de login.php
-// session_start();
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -21,32 +20,43 @@
             <form action="controladorRegistro.php" method="post">
                 <div class="mb-3">
                     <label for="dni" class="form-label">Introduce el DNI</label><br>
-                    <input type="text" class="form-control" id="dni" name="dni" required>
+                    <input type="text" class="form-control" id="dni" name="dni">
                 </div>
 
                 <div class="mb-3">
                     <label for="usuario" class="form-label">Introduce el usuario</label><br>
-                    <input type="text" class="form-control" id="usuario" name="usuario" required>
+                    <input type="text" class="form-control" id="usuario" name="usuario">
                 </div>
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Introduce el email</label><br>
-                    <input type="text" class="form-control" id="email" name="email" required>
+                    <input type="text" class="form-control" id="email" name="email">
                 </div>
 
                 <div class="mb-3">
                     <label for="contrasena" class="form-label">Introduce la contraseña</label><br>
-                    <input type="password" class="form-control" id="contrasena" name="contrasena" required>
+                    <input type="password" class="form-control" id="contrasena" name="contrasena">
                 </div>
 
-                <button type="submit" name="registrar" class="btn btn-primary">Registrar</button>
+                <button type="submit" id="enviar" name="registrar" class="btn btn-primary">Registrar</button><br>
+
+                <?php if (isset($_SESSION['mensaje_error'])) { ?>
+                    <div id="resultado" style="color: red; margin-bottom: 10px;">
+                        <?php
+                        echo $_SESSION['mensaje_error'];
+                        unset($_SESSION['mensaje_error']);
+                        ?>
+                    </div>
+                <?php }else { ?>
+                    <div id="resultado" style="color: red; margin-bottom: 10px;"></div>
+                <?php } ?>
             </form>
         </div>
         <div class="card-footer">
             <p>¿Ya tienes una cuenta? <a href="login.php">Inicia sesión</a></p>
         </div>
     </div>
-
+    <script src="../JavaScript/validacionFormularioRegistro.js" defer></script>
     <!-- Enlazamos con el script de Bootstrap si es necesario -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0Xr7RUbiT8lylQJlM5H56hlXTp0lvoFpt+msPnP1Dth46+gq" crossorigin="anonymous"></script>
     

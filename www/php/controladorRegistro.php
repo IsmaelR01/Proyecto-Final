@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once 'funciones_validar.php';
 require_once 'Conexion.php';
 $conexionBaseDatos = Conexion::conexionBD();
@@ -28,9 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Si el usuario no existe, procedemos a registrarlo
                 $contrasenaCifrada = password_hash($contrasena, PASSWORD_DEFAULT);
                 // Preparamos la consulta para insertar un nuevo usuario
-                $insertarUsuario = $conexionBaseDatos->prepare("INSERT INTO Usuarios (dni,nombre_usuario, clave, id_rol) VALUES (?, ?, ?, ?)");
+                $insertarUsuario = $conexionBaseDatos->prepare("INSERT INTO Usuarios (dni,nombre_usuario, clave, email, id_rol) VALUES (?, ?, ?, ?, ?)");
                 $idRol = 2;
-                $insertarUsuario->bind_param("sssi",$dni ,$usuario, $contrasenaCifrada, $idRol); 
+                $insertarUsuario->bind_param("ssssi",$dni ,$usuario, $contrasenaCifrada, $email, $idRol); 
                 $insertarUsuario->execute();
 
                 // Verificamos si se insertó correctamente
@@ -52,9 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // Mostrar el mensaje resultante
-    if(isset($mensaje)) {
-        echo $mensaje;
+    if (isset($mensaje)) {
+        $_SESSION['mensaje_error'] = $mensaje;
+        header('Location: registro.php');
+        exit;
     }
 }
 ?>

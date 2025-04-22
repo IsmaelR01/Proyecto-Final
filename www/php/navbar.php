@@ -5,10 +5,16 @@
 
         <div class="collapse navbar-collapse" id="barraNavegacion">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item ms-2 mt-2"><a class="nav-link" href="sobreti.php">Sobre Mí</a></li>
+                <li id="productos" class="nav-item ms-2 mt-2 position-relative"><a class="nav-link" href="#">Productos</a>
+                    <div id="submenu-productos" class="submenu-productos">
+                        <a href="jerseys.php" class="d-block text-white px-3 py-1">Jerseys</a>
+                        <a href="chaquetas.php" class="d-block text-white px-3 py-1">Chaquetas</a>
+                    </div>
+                </li>
                 <li class="nav-item ms-2 mt-2"><a class="nav-link" href="profesional.php">Profesional</a></li>
                 <li class="nav-item ms-2 mt-2"><a class="nav-link" href="contacto.php">Contacto</a></li>
             </ul>
+
         </div>
 
         <div class="ms-3 me-3 mt-2">
@@ -34,4 +40,20 @@
         </button>
     </div>
 </nav>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const productos = document.getElementById("productos");
+        const submenu = document.getElementById("submenu-productos");
+
+        productos.addEventListener("mouseover", () => {
+            submenu.style.display = "block";
+        });
+
+        productos.addEventListener("mouseleave", () => {
+            submenu.style.display = "none";
+        });
+    });
+</script>
+
 
