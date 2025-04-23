@@ -36,7 +36,9 @@ $resultado = $consultaProducto->get_result();
                     <div class="card-body">
                         <h5 class="card-title"><?php echo htmlspecialchars($producto['cod_producto']); ?></h5>
                         <p class="card-text"><?php echo htmlspecialchars($producto['nombre']); ?></p>
-                        <a href="#" class="btn btn-success">Más información</a>
+                        <button class="btn btn-success btn-info-producto" data-codigo="<?php echo htmlspecialchars($producto['cod_producto']); ?>">
+                            Más información
+                        </button>
                     </div>
                 </div>
             <?php } ?>
@@ -47,5 +49,6 @@ $resultado = $consultaProducto->get_result();
 
     <?php include 'php/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="Javascript/ajaxbusquedaproducto.js"></script>
 </body>
 </html>
