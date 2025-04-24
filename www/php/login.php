@@ -20,14 +20,14 @@ session_start();
         <div class="card-body">
             <form action="controladorLogin.php" method="post">
                 <div class="mb-3">
-                    <label for="usuario" class="form-label">Introduce el usuario</label>
+                    <label for="usuario" class="form-label">Introduce el usuario</label><br>
                     <input type="text" class="form-control" id="usuario" name="usuario">
                 </div>
 
                 <div class="mb-3">
-                    <label for="contrasena" class="form-label">Introduce la contraseña</label>
+                    <label for="contrasena" class="form-label">Introduce la contraseña</label><br>
                     <input type="password" class="form-control" id="contrasena" name="contrasena">
-                </div>
+                </div><br>
 
                 <button type="submit" id="enviar" name="sesion" class="btn btn-primary">Iniciar Sesión</button><br>
 
@@ -50,8 +50,6 @@ session_start();
     </div>
 
     <script src="../JavaScript/validacionFormularioSesion.js" defer></script>
-
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0Xr7RUbiT8lylQJlM5H56hlXTp0lvoFpt+msPnP1Dth46+gq" crossorigin="anonymous"></script>
 </body>
 </html>
