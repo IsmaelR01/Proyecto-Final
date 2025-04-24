@@ -27,7 +27,7 @@ body {
 }
 
 .navbar-nav > .nav-item > .nav-link:hover {
-    background-color: #0d6efd;
+    background-color: #17a2b8;
     color: white !important;
     transition: background-color 0.3s ease;
 }
@@ -81,9 +81,9 @@ main {
 .submenu-productos {
     display: none;
     position: absolute;
-    top: 100%; /* Esto lo coloca justo debajo del enlace "Productos" */
+    top: 100%; 
     left: 0;
-    background-color: #111;
+    background-color: #17a2b8;
     padding: 10px;
     min-width: 150px;
     z-index: 1000;
@@ -91,8 +91,12 @@ main {
     border-radius: 4px;
 }
 
+#submenu-productos a {
+    text-decoration: none;
+}
+
 .breadcrumb {
-    font-size: 1.25rem; /* Cambia el tamaño aquí */
+    font-size: 1.75rem; 
 }
 
 .card {
