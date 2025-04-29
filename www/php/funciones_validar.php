@@ -31,7 +31,7 @@ function validarEdad($edad) {
 function validarNombre($nombre) {
     $nombreArreglado = validarCadena($nombre); 
    
-    $patron = '/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)+$/';
+    $patron = '/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/';
     return (preg_match($patron, $nombreArreglado)) ? $nombreArreglado : false;
 }
 
@@ -117,4 +117,21 @@ function validarCodigoEspectaculo($codigoEspec) {
     $codigoEspec = validarCadena($codigoEspec);
     $patron = "/^[A-Z]{3}$/";
     return preg_match($patron, $codigoEspec) ? $codigoEspec : false;
+}
+
+function validarCodigoProducto($cod_producto) {
+    $cod_producto = validarCadena($cod_producto);
+    $patron = "/^[CJ][0-9]{4}$/";
+    return preg_match($patron, $cod_producto) ? $cod_producto : false;
+}
+
+function validarModelo($modelo) {
+    $modeloArreglado = filter_var($modelo, FILTER_SANITIZE_NUMBER_INT);
+    return filter_var($modeloArreglado, FILTER_VALIDATE_INT, ["options" => ["min_range" => 2010, "max_range" => 2035]]);
+}
+
+function validarCif($cif) {
+    $cif = validarCadena($cif);
+    $patron = "/^[A-Z][0-9]{7}[A-Z0-9]?$/i";
+    return preg_match($patron, $cif) ? $cif : false;
 }

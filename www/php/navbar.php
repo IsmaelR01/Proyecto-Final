@@ -11,7 +11,7 @@
                         <a href="chaquetas.php" class="d-block text-white px-3 py-1">Chaquetas</a>
                     </div>
                 </li>
-                <li class="nav-item ms-2 mt-2"><a class="nav-link" href="profesional.php">Profesional</a></li>
+                <li class="nav-item ms-2 mt-2"><a class="nav-link" href="quienesSomos.php">Quienes Somos</a></li>
                 <li class="nav-item ms-2 mt-2"><a class="nav-link" href="contacto.php">Contacto</a></li>
             </ul>
 

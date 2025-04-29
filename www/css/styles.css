@@ -95,6 +95,10 @@ main {
     text-decoration: none;
 }
 
+#submenu-productos a:hover {
+    background-color: #0e6c7b;
+}
+
 .breadcrumb {
     font-size: 1.75rem; 
 }
@@ -108,6 +112,11 @@ main {
     height: 300px; 
     object-fit: cover;
     border-radius: 8px 8px 0 0;
+}
+
+.btn-crud {
+    text-decoration: none;
+    margin: 10px;
 }
 
 
