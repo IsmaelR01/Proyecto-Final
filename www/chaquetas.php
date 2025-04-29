@@ -118,7 +118,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
 
                         <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
                             <div class="d-flex gap-1 mt-2">
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#editar_<?php echo $identificadorModal; ?>">
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editar_<?php echo $identificadorModal; ?>">
                                     Editar
                                 </button>
                                 <form action="php/eliminarProducto.php" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');" class="d-inline">

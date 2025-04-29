@@ -135,3 +135,15 @@ function validarCif($cif) {
     $patron = "/^[A-Z][0-9]{7}[A-Z0-9]?$/i";
     return preg_match($patron, $cif) ? $cif : false;
 }
+
+function validarTelefono($telefono) {
+    $telefono = validarCadena($telefono);
+    $patron = "/^[6789][0-9]{8}$/";
+    return preg_match($patron, $telefono) ? $telefono : false;
+}
+
+function validarDireccion($direccion) {
+    $direccion = validarCadena($direccion);
+    $patron = '/^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ\s,\.]+(\d{1,5})?(\s?[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+)?(\s?\d{5})?(\s?[a-zA-Z\s]+)?$/';
+    return preg_match($patron, $direccion) ? $direccion : false;
+}

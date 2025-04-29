@@ -1,50 +1,203 @@
 <?php
 session_start();
+require_once 'php/Conexion.php';
+$conexionBaseDatos = Conexion::conexionBD();
+$consultaProveedores = $conexionBaseDatos->prepare("SELECT CIF, nombre_proveedor, direccion_proveedor FROM Proveedores");
+$consultaProveedores->execute();
+$resultado = $consultaProveedores->get_result();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profesional</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiénes Somos - Tienda de Jerseys y Chaquetas de Punto</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/estiloQuienesSomos.css">
 </head>
 <body>
     <?php include 'php/navbar.php'; ?>
+    <div class="container my-2">
 
-    <div class="container text-center mt-5">
-        <h1>Mi Trayectoria Profesional</h1>
-        <p>Mi trayectoria profesional ha sido bastante corta, por ahora debido a que todavía estoy en proceso de aprendizaje
-            haciendo lo que más me gusta que es informática en la rama de Desarrollo de Aplicaciones Web.
-            He trabajado en una empresa textil durante un año y me ha servido para introducirme en el mundo laboral y después trabajé
-            durante 3 meses en una gasolinera en los meses del verano de 2023.
-        </p>
-        
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <h3>Formación Académica</h3>
-                <ul class="list-group">
-                    <li class="list-group-item">Infantil - C.E.I.P. San Sebastián Localidad: Fiñana (Almería) Años: 2004-2006</li>
-                    <li class="list-group-item">Primaria - C.E.I.P. Joaquín Tena Sicilia Localidad: Abla (Almería) Años: 2007-2012</li>
-                    <li class="list-group-item">Educación Secundaria Obligatoria - I.E.S. Sierra Nevada Localidad: Fiñana (Almería) Años: 2013-2016</li>
-                    <li class="list-group-item">Bachillerato - I.E.S. Sierra Nevada Localidad: Fiñana (Almería) Años: 2017-2019</li>
-                    <li class="list-group-item">Ingeniería Informática - Universidad de Almería (abandoné la carrera)  Localidad: Almería Años: 2019-2021</li>
-                    <li class="list-group-item">Ciclo Formativo Grado Superior Desarrollo Aplicaciones Web (DAW) - I.E.S.Aguadulce Localidad: Aguadulce (Almería) Años: 2023-Act</li>
-                </ul>
+        <h2 class="section-title">Quiénes Somos</h2>
+
+        <div class="col-md-8 mx-auto mb-5">
+            <div class="card shadow-sm rounded-4 bg-light border-0">
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-3">Nuestra Historia</h4>
+                    <p class="card-text lead">
+                    Fundada en 2015, <strong>Mundo Punto</strong> nació con el propósito de ofrecer prendas exclusivas de alta calidad en 
+                    <strong>géneros de punto</strong>. Desde nuestra pequeña tienda online, estamos intentando expandir nuestra oferta de <strong>jerseys y chaquetas 
+                        </strong> elaborados con materiales seleccionados cuidadosamente, que garantizan comodidad y estilo para nuestros clientes.
+                    </p>
+                    <p class="intro-text mt-3 fst-italic">
+                    “Con cada prenda, buscamos no solo vestir, sino también contar una historia de confort, calidad y diseño”.
+                    </p>
+                </div>
             </div>
-            <div class="col-md-6">
-                <h3>Experiencia Laboral</h3>
-                <ul class="list-group">
-                    <li class="list-group-item">Rivaspunt S.A. (Empresa Textil)</li>
-                    <li class="list-group-item">Gasóleos Huéneja S.L.L. (Gasolinera)</li>
-                </ul>
+        </div>
+
+        <div class="col-md-8 mx-auto mb-5">
+            <div class="card shadow-sm rounded-4 bg-light border-0">
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-3">Misión</h4>
+                    <p class="card-text lead">
+                    Nuestra misión es ser el destino favorito para quienes buscan <strong>prendas de punto de calidad premium</strong>, elaboradas con tejidos 
+                    suaves, duraderos y de diseño moderno. Queremos que cada cliente se sienta cómodo y elegante al usar nuestros productos, brindando una 
+                    experiencia de compra única.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 mx-auto mb-5">
+            <div class="card shadow-sm rounded-4 bg-light border-0">
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-3">Visión a Futuro</h4>
+                    <p class="card-text lead">
+                    En los próximos años, aspiramos a seguir creciendo como una marca <strong>sostenible y responsable</strong>, trabajando de la mano 
+                    con <strong>proveedores locales</strong> e internacionales que compartan nuestra visión de ofrecer productos de alta calidad y amigables 
+                    con el medio ambiente. Queremos expandir nuestra presencia online y llegar a más clientes que busquen prendas de punto versátiles, 
+                    para todas las ocasiones.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10 mx-auto">
+            <h2 class="providers-title">Nuestros Proveedores</h2>
+
+            <?php if (isset($_SESSION['mensaje'])): ?>
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    <?php echo $_SESSION['mensaje']; unset($_SESSION['mensaje']); ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+            <div class="row g-4">
+                <!-- INICIO: Botón Añadir Proveedor -->
+                <?php if (isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
+                    <div class="mb-3">
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#añadirProveedorModal">
+                            Añadir Proveedor
+                        </button>
+                    </div>
+                <?php } ?>
+                <!-- FIN: Botón Añadir Proveedor -->
+
+                <!-- INICIO: Modal Añadir Proveedor -->
+                <?php if (isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
+                <div class="modal fade" id="añadirProveedorModal" tabindex="-1" aria-labelledby="añadirProveedorLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="php/añadirProveedor.php" method="POST">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="añadirProveedorLabel">Añadir Proveedor</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">CIF</label>
+                                        <input type="text" name="CIF" class="form-control" required maxlength="9">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nombre</label>
+                                        <input type="text" name="nombre_proveedor" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Dirección</label>
+                                        <input type="text" name="direccion_proveedor" class="form-control" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Teléfono</label>
+                                        <input type="text" name="telefono" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success">Guardar</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+                <!-- FIN: Modal Añadir Proveedor -->
+
+                <?php while ($proveedor = $resultado->fetch_assoc()) {  ?>
+                <div class="col-6 col-sm-4 col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><?php echo htmlspecialchars($proveedor['nombre_proveedor']); ?></h5>
+                            <p class="card-text"><?php echo htmlspecialchars($proveedor['direccion_proveedor']); ?></p>
+                                <!-- INICIO: Botones editar/eliminar -->
+                                <?php if (isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <!-- Botón Editar -->
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editarProveedor_<?php echo $proveedor['CIF']; ?>">
+                                            Editar
+                                        </button>
+                                        <!-- Botón Eliminar -->
+                                        <form action="php/eliminarProveedor.php" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este proveedor?');">
+                                            <input type="hidden" name="CIF" value="<?php echo htmlspecialchars($proveedor['CIF']); ?>">
+                                            <button class="btn btn-sm btn-danger">Eliminar</button>
+                                        </form>
+                                    </div>
+                                <?php } ?>
+                                <!-- FIN: Botones editar/eliminar -->
+                        </div>
+                    </div>
+                </div>
+
+                    <!-- INICIO: Modal Editar Proveedor -->
+                <div class="modal fade" id="editarProveedor_<?php echo $proveedor['CIF']; ?>" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="php/editarProveedor.php" method="POST">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Editar Proveedor</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="CIF_original" value="<?php echo htmlspecialchars($proveedor['CIF']); ?>">
+                                    <div class="mb-3">
+                                        <label class="form-label">CIF</label>
+                                        <input type="text" name="CIF" class="form-control" required value="<?php echo htmlspecialchars($proveedor['CIF']); ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nombre</label>
+                                        <input type="text" name="nombre_proveedor" class="form-control" required value="<?php echo htmlspecialchars($proveedor['nombre_proveedor']); ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Dirección</label>
+                                        <input type="text" name="direccion_proveedor" class="form-control" required value="<?php echo htmlspecialchars($proveedor['direccion_proveedor']); ?>">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN: Modal Editar Proveedor -->
+                <?php } ?>
             </div>
         </div>
     </div>
 
-    <?php include 'php/footer.php'; ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <?php include 'php/footer.php'; ?>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
