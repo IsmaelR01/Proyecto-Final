@@ -2,7 +2,7 @@
 session_start();
 require_once 'php/Conexion.php';
 $conexionBaseDatos = Conexion::conexionBD();
-$consultaProveedores = $conexionBaseDatos->prepare("SELECT CIF, nombre_proveedor, direccion_proveedor FROM Proveedores");
+$consultaProveedores = $conexionBaseDatos->prepare("SELECT CIF, nombre_proveedor, direccion_proveedor,telefono FROM Proveedores");
 $consultaProveedores->execute();
 $resultado = $consultaProveedores->get_result();
 ?>
@@ -16,11 +16,11 @@ $resultado = $consultaProveedores->get_result();
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/estiloQuienesSomos.css">
+  <link rel="stylesheet" href="css/estiloQuienesSomos.css"> 
 </head>
 <body>
     <?php include 'php/navbar.php'; ?>
-    <div class="container my-2">
+    <main class="container my-5">
 
         <h2 class="section-title">Quiénes Somos</h2>
 
@@ -169,11 +169,7 @@ $resultado = $consultaProveedores->get_result();
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <input type="hidden" name="CIF_original" value="<?php echo htmlspecialchars($proveedor['CIF']); ?>">
-                                    <div class="mb-3">
-                                        <label class="form-label">CIF</label>
-                                        <input type="text" name="CIF" class="form-control" required value="<?php echo htmlspecialchars($proveedor['CIF']); ?>">
-                                    </div>
+                                    <input type="hidden" name="CIF" value="<?php echo htmlspecialchars($proveedor['CIF']); ?>">
                                     <div class="mb-3">
                                         <label class="form-label">Nombre</label>
                                         <input type="text" name="nombre_proveedor" class="form-control" required value="<?php echo htmlspecialchars($proveedor['nombre_proveedor']); ?>">
@@ -181,6 +177,10 @@ $resultado = $consultaProveedores->get_result();
                                     <div class="mb-3">
                                         <label class="form-label">Dirección</label>
                                         <input type="text" name="direccion_proveedor" class="form-control" required value="<?php echo htmlspecialchars($proveedor['direccion_proveedor']); ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Teléfono</label>
+                                        <input type="text" name="telefono" class="form-control" required value="<?php echo htmlspecialchars($proveedor['telefono']); ?>">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -195,7 +195,7 @@ $resultado = $consultaProveedores->get_result();
                 <?php } ?>
             </div>
         </div>
-    </div>
+    </main>
 
   <?php include 'php/footer.php'; ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

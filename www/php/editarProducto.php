@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = validarNombre(filter_input(INPUT_POST, 'nombre'));
     $modelo = validarModelo(filter_input(INPUT_POST, 'modelo'));
     $descripcion = trim($_POST['descripcion']);
-    
+    $precioProducto = validarPrecio(filter_input(INPUT_POST,'precio'));
     $conexionBaseDatos = Conexion::conexionBD();
 
     // Gestionar nueva imagen si se envía
@@ -43,17 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nuevaImagen = $rutaDestino;
     }
 
-    if (!$cod_producto || !$nombre || !$modelo || !$descripcion) {
+    if (!$cod_producto || !$nombre || !$modelo || !$descripcion || !$precioProducto) {
         $_SESSION['error'] = "Alguno de los campos introducidos no son correctos.";
         header('Location: ../'.$origen.'.php');
         exit();
     } else {
         if ($nuevaImagen !== '') {
-            $editarProducto = $conexionBaseDatos->prepare("UPDATE Productos SET nombre = ?, modelo = ?, descripcion = ?, imagen = ? WHERE cod_producto = ?");
-            $editarProducto->bind_param("sisss", $nombre, $modelo, $descripcion, $nuevaImagen, $cod_producto);
+            $editarProducto = $conexionBaseDatos->prepare("UPDATE Productos SET nombre = ?, modelo = ?, descripcion = ?, precio = ?, imagen = ? WHERE cod_producto = ?");
+            $editarProducto->bind_param("sisdss", $nombre, $modelo, $descripcion, $precioProducto, $nuevaImagen, $cod_producto);
         } else {
-            $editarProducto = $conexionBaseDatos->prepare("UPDATE Productos SET nombre = ?, modelo = ?, descripcion = ? WHERE cod_producto = ?");
-            $editarProducto->bind_param("siss", $nombre, $modelo, $descripcion, $cod_producto);
+            $editarProducto = $conexionBaseDatos->prepare("UPDATE Productos SET nombre = ?, modelo = ?, descripcion = ?, precio = ? WHERE cod_producto = ?");
+            $editarProducto->bind_param("sisds", $nombre, $modelo, $descripcion, $precioProducto, $cod_producto);
         }
 
         if ($editarProducto->execute()) {

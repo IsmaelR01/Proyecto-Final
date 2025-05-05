@@ -15,10 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $eliminarProveedor = $conexionBaseDatos->prepare("DELETE FROM Proveedores WHERE CIF = ?");
     $eliminarProveedor->bind_param("s", $cif);
 
-    if ($eliminarProveedor->execute()) {
+    try {
+        $eliminarProveedor->execute();
         $_SESSION['mensaje'] = "Proveedor eliminado correctamente.";
-    } else {
-        $_SESSION['error'] = "Error al eliminar el proveedpr. El proveedor tiene productos asignados";
+    } catch (Exception $e) {
+        if (str_contains($e->getMessage(), 'a foreign key constraint fails')) {
+            $_SESSION['error'] = "No se puede eliminar el proveedor porque tiene productos asignados.";
+        } else {
+            $_SESSION['error'] = "Ocurrió un error al eliminar el proveedor.";
+        }
     }
     header('Location: ../quienesSomos.php');
     exit();

@@ -84,8 +84,13 @@ function validarIdentificador($identificador) {
 }
 
 function validarPrecio($precio) {
-    $precio = filter_var($precio, FILTER_SANITIZE_NUMBER_FLOAT);
-    return filter_var($precio, FILTER_VALIDATE_FLOAT, ["options" => ["min_range" => 1.0, "max_range" => 1000.0]]);
+    $precio = filter_var($precio, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    return filter_var($precio, FILTER_VALIDATE_FLOAT, [
+        "options" => [
+            "min_range" => 0.01,
+            "max_range" => 999.99
+        ]
+    ]);
 }
 
 function validarMatricula($matricula) {

@@ -3,7 +3,7 @@ session_start();
 require_once 'php/Conexion.php';
 $conexionBaseDatos = Conexion::conexionBD();
 $busqueda = 'C%';
-$consultaProducto = $conexionBaseDatos->prepare("SELECT * FROM Productos WHERE cod_producto like ?");
+$consultaProducto = $conexionBaseDatos->prepare("SELECT cod_producto, nombre, modelo, descripcion, imagen, REPLACE(FORMAT(precio, 2), '.', ',') AS precio, CIF FROM Productos WHERE cod_producto like ?");
 $consultaProducto->bind_param("s", $busqueda);
 $consultaProducto->execute();
 $resultado = $consultaProducto->get_result();
@@ -78,6 +78,10 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                     <textarea class="form-control" name="descripcion"></textarea>
                                 </div>
                                 <div class="mb-3">
+                                    <label class="form-label">Precio (sin € y los decimales con .)</label>
+                                    <input type="text" class="form-control" name="precio" required>
+                                </div>
+                                <div class="mb-3">
                                     <label for="cif" class="form-label">Proveedor</label>
                                     <select name="cif" id="cif" class="form-select" required>
                                         <option value="" selected disabled>Selecciona un proveedor</option>
@@ -112,6 +116,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                     <div class="card-body">
                         <h5 class="card-title"><?php echo htmlspecialchars($producto['cod_producto']); ?></h5>
                         <p class="card-text"><?php echo htmlspecialchars($producto['nombre']); ?></p>
+                        <p class="card-text"><?php echo htmlspecialchars($producto['precio']). " €"; ?></p>
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#<?php echo $identificadorModal; ?>">
                             Más información
                         </button>
@@ -122,6 +127,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                     Editar
                                 </button>
                                 <form action="php/eliminarProducto.php" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');" class="d-inline">
+                                    <input type="hidden" name="origen" value="chaquetas">
                                     <input type="hidden" name="cod_producto" value="<?php echo htmlspecialchars($producto['cod_producto']); ?>">
                                     <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                 </form>
@@ -149,6 +155,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                                             <p><strong>Nombre:</strong> <?php echo htmlspecialchars($producto['nombre']); ?></p>
                                                             <p><strong>Modelo:</strong> <?php echo htmlspecialchars($producto['modelo']); ?></p>
                                                             <p><strong>Descripción:</strong> <?php echo htmlspecialchars($producto['descripcion']); ?></p>
+                                                            <p><strong>Precio:</strong> <?php echo htmlspecialchars($producto['precio']). " €"; ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -183,6 +190,10 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                             <div class="mb-3">
                                                 <label class="form-label">Descripción</label>
                                                 <textarea class="form-control" name="descripcion"><?php echo htmlspecialchars($producto['descripcion']); ?></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Precio (sin € y los decimales con .)</label>
+                                                <input type="text" class="form-control" name="precio" required value="<?php echo htmlspecialchars($producto['precio']); ?>">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Imagen (subir nueva si se desea)</label>

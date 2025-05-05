@@ -51,27 +51,9 @@ main {
 .form-control {
     background-color: lightblue;
 }
-
-#carouselExampleCaptions {
-    max-height: 400px; 
-    overflow: hidden;
-}
-
-#carouselExampleCaptions .carousel-item {
-    height: 400px; 
-}
-
-#carouselExampleCaptions .carousel-item img {
-    height: 100%;
+.object-fit-cover {
+    object-fit: cover;
     width: 100%;
-    object-fit: cover; 
-}
-
-@media (max-width: 768px) {
-    #carouselExampleCaptions,
-    #carouselExampleCaptions .carousel-item {
-        height: 250px; 
-    }
 }
 
 #productos {
