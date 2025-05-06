@@ -120,11 +120,12 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                         <h5 class="card-title"><?php echo htmlspecialchars($producto['cod_producto']); ?></h5>
                         <p class="card-text"><?php echo htmlspecialchars($producto['nombre']); ?></p>
                         <p class="card-text"><?php echo htmlspecialchars($producto['precio']). " €"; ?></p>
+                        <?php if (isset($_SESSION['usuario']) && (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'cliente' || $_SESSION['rol'] === 'admin'))) { ?>
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#<?php echo $identificadorModal; ?>">
                             Más información
                         </button>
-
-                        <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
+                        <?php } 
+                        if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
                             <div class="d-flex gap-1 mt-2">
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editar_<?php echo $identificadorModal; ?>">
                                     Editar

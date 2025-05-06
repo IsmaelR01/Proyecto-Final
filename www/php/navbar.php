@@ -26,6 +26,9 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="perfilDropdown">
                         <li><a class="dropdown-item text-danger" href="php/logout.php">Cerrar sesión</a></li>
+                        <?php if($_SESSION['rol'] === 'admin') { ?>
+                            <li><a class="dropdown-item" href="php/administrarUsuarios.php">Administrar Usuarios</a></li>
+                        <?php } ?>
                     </ul>
                 </div>
             <?php  } else { ?>

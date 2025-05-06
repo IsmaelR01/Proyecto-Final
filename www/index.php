@@ -1,5 +1,12 @@
 <?php
 session_start();
+require_once 'php/Conexion.php';
+$conexionBaseDatos = Conexion::conexionBD();
+$anioActual = date("Y");
+$consultaNovedades = $conexionBaseDatos->prepare("SELECT imagen FROM Productos WHERE modelo = ? ORDER BY modelo DESC");
+$consultaNovedades->bind_param("s", $anioActual);
+$consultaNovedades->execute();
+$resultado = $consultaNovedades->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -63,6 +70,38 @@ session_start();
             </div>
         </div>
 
+        <h1 class="text-center my-4">Novedades de este año</h1>
+        <div class="d-flex justify-content-center">
+            <div class="card overflow-hidden" style="width: 30rem; height: 30rem;">
+                <div id="carouselSegundo" class="carousel slide h-100">
+                    <div class="carousel-inner h-100">
+                        <?php 
+                        $primera = true;
+                        while ($producto = $resultado->fetch_assoc()) { 
+                        ?>
+                            <div class="carousel-item <?php if ($primera) { echo 'active'; $primera = false; } ?> h-100">
+                                <div class="h-100 d-flex flex-column">
+                                    <div class="flex-grow-1 overflow-hidden">
+                                        <img src="<?php echo htmlspecialchars($producto['imagen']); ?>" class="w-100 h-100 object-fit-cover" alt="...">
+                                    </div>
+                                    <div class="bg-light py-2">
+                                        <p class="text-center m-0">¡Producto nuevo de este año!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselSegundo" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon bg-black" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselSegundo" data-bs-slide="next">
+                        <span class="carousel-control-next-icon bg-black" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+        </div>
 
         
     </main>
