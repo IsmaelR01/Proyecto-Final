@@ -11,7 +11,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $dni = filter_input(INPUT_POST, 'dni');
+    $dniUsuarioSeleccionado = filter_input(INPUT_POST, 'seleccionUsuario');
     $nombre = validarUsuario(filter_input(INPUT_POST, 'nombre'));
     $email = validarEmail(filter_input(INPUT_POST, 'email'));
     $direccion = validarDireccion(filter_input(INPUT_POST,'direccion'));
@@ -26,9 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         
         $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, email = ?, direccion = ? WHERE dni = ?");
-        $editarUsuario->bind_param("ssss", $nombre, $email, $direccion, $dni);
-        $editarUsuario->execute();
-        if ($editarUsuario->affected_rows > 0) {
+        $editarUsuario->bind_param("ssss", $nombre, $email, $direccion, $dniUsuarioSeleccionado);
+        if ($editarUsuario->execute()) {
             $_SESSION['mensaje'] = "Usuario editado correctamente.";
         } else {
             $_SESSION['error'] = "Error al editar el usuario.";
