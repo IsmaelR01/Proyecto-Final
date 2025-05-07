@@ -21,6 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$nombre || !$email || !$direccion) {
         $_SESSION['error'] = "Alguno de los campos introducidos no son correctos.";
+        $_SESSION['accion'] = 'editar';
+        $_SESSION['seleccionUsuario'] = $dniUsuarioSeleccionado;
         header('Location: administrarUsuarios.php');
         exit();
     } else {
@@ -32,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $_SESSION['error'] = "Error al editar el usuario.";
         }
+        $_SESSION['accion'] = 'editar';
+        $_SESSION['seleccionUsuario'] = $dniUsuarioSeleccionado;
         header('Location: administrarUsuarios.php');
         exit();
     }

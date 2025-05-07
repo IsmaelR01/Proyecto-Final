@@ -21,6 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $_SESSION['error'] = "Error al eliminar el usuario.";
     }
+    $_SESSION['accion'] = 'eliminar';
+    $_SESSION['seleccionUsuario'] = $dniUsuarioSeleccionado;
     header('Location: administrarUsuarios.php');
     exit();
 }

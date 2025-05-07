@@ -18,7 +18,8 @@ body {
     width: 100%;
     max-width: 400px;
     background-color: #ffffff;
-    overflow: hidden; 
+    overflow: hidden;
+    margin-top: 40px; 
 }
 
 .card-header {
@@ -43,6 +44,7 @@ body {
     font-size: 1rem;
     transition: all 0.3s ease;
     width: 90%;
+    margin: 0 auto;
 }
 
 .form-control:focus {

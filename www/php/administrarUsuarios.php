@@ -11,8 +11,10 @@ $consultaUsuarios->execute();
 
 $resultadoUsuarios = $consultaUsuarios->get_result()->fetch_all(MYSQLI_ASSOC);
 
-$accionSeleccionada = $_POST['accion'] ?? '';
-$usuarioSeleccionadoId = $_POST['seleccionUsuario'] ??  '';
+$accionSeleccionada = $_POST['accion'] ?? ($_SESSION['accion'] ?? '');
+$usuarioSeleccionadoId = $_POST['seleccionUsuario'] ?? ($_SESSION['seleccionUsuario'] ?? '');
+unset($_SESSION['accion'], $_SESSION['seleccionUsuario']);
+
 
 $usuarioSeleccionado = null;
 
@@ -98,6 +100,7 @@ foreach ($resultadoUsuarios as $usuario) {
 
                 <?php if ($usuarioSeleccionado) { ?>
                     <form method="POST" action="editarUsuario.php" id="formularioEditar">
+                        <input type="hidden" name="seleccionUsuario" value="<?= htmlspecialchars($usuarioSeleccionado['dni']) ?>">
                         <div class="mb-3 text-center">
                             <div class="mb-3">
                                 <label class="form-label">Nombre de usuario:</label>
@@ -134,6 +137,8 @@ foreach ($resultadoUsuarios as $usuario) {
             <?php if ($accionSeleccionada === 'eliminar'): ?>
                 <form method="POST" action="eliminarUsuario.php" class="text-center">
                     <div class="mb-3 text-center">
+                        <input type="hidden" name="accion" value="eliminar">
+                        <input type="hidden" name="seleccionUsuario" value="<?= htmlspecialchars($usuarioSeleccionado['dni']) ?>">
                         <label for="usuario_id" class="form-label">Selecciona un usuario para eliminar:</label>
                         <select class="form-select form-select-sm mx-auto" style="width: 60%;" name="seleccionUsuario" id="seleccionUsuario">
                             <option value="">-- Selecciona --</option>
