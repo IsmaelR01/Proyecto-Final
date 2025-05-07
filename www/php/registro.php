@@ -29,6 +29,11 @@ session_start();
                 </div>
 
                 <div class="mb-3">
+                    <label for="usuario" class="form-label">Dirección</label><br>
+                    <input type="text" class="form-control" id="direccion" name="direccion">
+                </div>
+
+                <div class="mb-3">
                     <label for="email" class="form-label">Introduce el email</label><br>
                     <input type="text" class="form-control" id="email" name="email">
                 </div>
@@ -47,8 +52,13 @@ session_start();
                         unset($_SESSION['mensaje_error']);
                         ?>
                     </div>
-                <?php }else { ?>
-                    <div id="resultado" style="color: red; margin-bottom: 10px;"></div>
+                <?php }else if(isset($_SESSION['mensajeExito'])) { ?>
+                    <div id="resultado" style="color: green; margin-bottom: 10px;">
+                    <?php
+                        echo $_SESSION['mensajeExito'];
+                        unset($_SESSION['mensajeExito']);
+                        ?>
+                    </div>
                 <?php } ?>
             </form>
         </div>

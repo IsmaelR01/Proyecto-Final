@@ -8,10 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Primero validamos los datos ingresados
     $dni = validarDni(filter_input(INPUT_POST, 'dni'));
     $usuario = validarUsuario(filter_input(INPUT_POST, 'usuario'));
+    $direccion = validarDireccion(filter_input(INPUT_POST, 'direccion'));
     $email = validarEmail(filter_input(INPUT_POST, 'email'));
     $contrasena = validarContrasena(filter_input(INPUT_POST, 'contrasena'));
 
-    if (!$dni || !$usuario || !$email || !$contrasena) {
+    if (!$dni || !$usuario || !$email || !$direccion || !$contrasena) {
         // Si los datos no son válidos, redirige directamente
         $mensaje = "Los datos que has introducido no son válidos";
     } else {
@@ -28,15 +29,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 // Si el usuario no existe, procedemos a registrarlo
                 $contrasenaCifrada = password_hash($contrasena, PASSWORD_DEFAULT);
-                // Preparamos la consulta para insertar un nuevo usuario
-                $insertarUsuario = $conexionBaseDatos->prepare("INSERT INTO Usuarios (dni,nombre_usuario, clave, email, id_rol) VALUES (?, ?, ?, ?, ?)");
-                $idRol = 2;
-                $insertarUsuario->bind_param("ssssi",$dni ,$usuario, $contrasenaCifrada, $email, $idRol); 
+                if(isset($_SESSION['usuario']) && $_SESSION['rol'] === "admin") {
+                    $insertarUsuario = $conexionBaseDatos->prepare("INSERT INTO Usuarios (dni,nombre_usuario, clave, email, direccion, id_rol) VALUES (?, ?, ?, ?, ?, ?)");
+                    $idRol = 1;
+                    $insertarUsuario->bind_param("sssssi",$dni ,$usuario, $contrasenaCifrada, $email, $direccion,$idRol); 
+                } else {
+                    $insertarUsuario = $conexionBaseDatos->prepare("INSERT INTO Usuarios (dni,nombre_usuario, clave, email, direccion, id_rol) VALUES (?, ?, ?, ?, ?, ?)");
+                    $idRol = 2;
+                    $insertarUsuario->bind_param("sssssi",$dni ,$usuario, $contrasenaCifrada, $email, $direccion,$idRol); 
+                }
+
                 $insertarUsuario->execute();
+                
 
                 // Verificamos si se insertó correctamente
                 if ($insertarUsuario->affected_rows > 0) {
-                    $mensaje = "Usuario registrado correctamente";
+                    $mensajeExito = "Usuario registrado correctamente";
                 } else {
                     $mensaje = "Hubo un error al registrar el usuario";
                 }
@@ -54,9 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     if (isset($mensaje)) {
+        $_SESSION['mensajeExito'] = $mensajeExito;
+    } else if(isset($mensajeExito)) {
         $_SESSION['mensaje_error'] = $mensaje;
-        header('Location: registro.php');
-        exit;
     }
+    header('Location: registro.php');
+    exit();
 }
 ?>
