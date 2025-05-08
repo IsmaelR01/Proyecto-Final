@@ -56,7 +56,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
             <div class="modal fade" id="añadirModal" tabindex="-1" aria-labelledby="añadirModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
-                        <form action="php/añadirProducto.php" method="POST" enctype= "multipart/form-data">
+                        <form action="php/añadirProducto.php" id="formularioAñadirProducto" method="POST" enctype= "multipart/form-data">
                             <input type="hidden" name="origen" value="jerseys">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="añadirModalLabel">Añadir Nuevo Producto</h5>
@@ -65,27 +65,27 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label class="form-label">Código</label>
-                                    <input type="text" class="form-control" name="cod_producto" required maxlength="5">
+                                    <input type="text" class="form-control" id="cod_producto" name="cod_producto" >
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" required maxlength="40">
+                                    <input type="text" class="form-control" id="nombre" name="nombre">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Modelo</label>
-                                    <input type="text" class="form-control" name="modelo" required min="0">
+                                    <input type="text" class="form-control" id="modelo" name="modelo">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Descripción</label>
-                                    <textarea class="form-control" name="descripcion"></textarea>
+                                    <textarea class="form-control"  id="descripcion" name="descripcion"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Precio (sin € y los decimales con .)</label>
-                                    <input type="text" class="form-control" name="precio">
+                                    <input type="text" class="form-control" id="precio" name="precio">
                                 </div>
                                 <div class="mb-3">
                                     <label for="cif" class="form-label">Proveedor</label>
-                                    <select name="cif" id="cif" class="form-select" required>
+                                    <select name="cif" id="cif" class="form-select">
                                         <option value="" selected disabled>Selecciona un proveedor</option>
                                         <?php while ($proveedor = $consultaProveedores->fetch_assoc()): ?>
                                             <option value="<?php echo htmlspecialchars($proveedor['CIF']); ?>">
@@ -97,12 +97,15 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
 
                                 <div class="mb-3">
                                     <label for="imagen" class="form-label">Seleccionar imagen</label>
-                                    <input type="file" class="form-control" id="imagen" name="imagen" accept="image/jpeg, image/png" required>
+                                    <input type="file" class="form-control" id="imagen" name="imagen" accept="image/jpeg, image/png">
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Añadir Producto</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" id="botonAñadirEnviar" class="btn btn-success">Añadir Producto</button>
+                                <button type="button" id= "botonAñadirCancelar"class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            </div><br>
+                            <div id="resultadoProducto" style="color: red; margin-bottom: 10px;">
+
                             </div>
                         </form>
                     </div>
@@ -219,5 +222,6 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
     </main>
     <?php include 'php/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JavaScript/validacionFormularioAñadirProducto.js"></script>
 </body>
 </html>

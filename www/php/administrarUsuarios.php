@@ -146,6 +146,9 @@ if(isset($usuarioSeleccionadoId)) {
                     </div>
                     <div class="d-grid w-50 mx-auto">
                         <button type="submit" class="btn btn-danger btn-sm">Eliminar Usuario</button>
+                    </div><br>
+                    <div id="mensajeEliminar" style="color: red; margin-bottom: 10px;">
+
                     </div>
                 </form>
             <?php } ?>
@@ -175,6 +178,7 @@ if(isset($usuarioSeleccionadoId)) {
     }
 });
 </script>
+<script src="../JavaScript/validacionFormulariosAdministracionUsuarios.js" defer></script>
 
 </body>
 </html>

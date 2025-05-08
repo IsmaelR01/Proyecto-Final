@@ -7,7 +7,7 @@
 
 function validarCadena($campo) {
     
-    $campo = trim($campo);
+    $campo = trim($campo ?? '');
       
     $campo = strip_tags($campo);
     $campo = htmlspecialchars($campo, ENT_QUOTES, 'UTF-8');

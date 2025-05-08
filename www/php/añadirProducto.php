@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cod_producto = validarCodigoProducto(filter_input(INPUT_POST, 'cod_producto'));
     $nombre = validarNombre(filter_input(INPUT_POST, 'nombre'));
     $modelo = validarModelo(filter_input(INPUT_POST, 'modelo'));
-    $descripcion = trim($_POST['descripcion']);
+    $descripcion = filter_input(INPUT_POST, 'descripcion');
     $precioProducto = validarPrecio(filter_input(INPUT_POST, 'precio'));
     $cif = validarCif(filter_input(INPUT_POST, 'cif'));
 
