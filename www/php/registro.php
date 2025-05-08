@@ -29,7 +29,7 @@ session_start();
                 </div>
 
                 <div class="mb-3">
-                    <label for="usuario" class="form-label">Dirección</label><br>
+                    <label for="direccion" class="form-label">Dirección</label><br>
                     <input type="text" class="form-control" id="direccion" name="direccion">
                 </div>
 
@@ -45,21 +45,17 @@ session_start();
 
                 <button type="submit" id="enviar" name="registrar" class="btn btn-primary">Registrar</button><br>
 
-                <?php if (isset($_SESSION['mensaje_error'])) { ?>
-                    <div id="resultado" style="color: red; margin-bottom: 10px;">
-                        <?php
+                <div id="resultado" style="color: red; margin-bottom: 10px;">
+                    <?php
+                    if (isset($_SESSION['mensaje_error'])) {
                         echo $_SESSION['mensaje_error'];
                         unset($_SESSION['mensaje_error']);
-                        ?>
-                    </div>
-                <?php }else if(isset($_SESSION['mensajeExito'])) { ?>
-                    <div id="resultado" style="color: green; margin-bottom: 10px;">
-                    <?php
-                        echo $_SESSION['mensajeExito'];
-                        unset($_SESSION['mensajeExito']);
-                        ?>
-                    </div>
-                <?php } ?>
+                    } elseif (isset($_SESSION['mensajeExito'])) { ?>
+                        <span style="color:green;"> <?php echo $_SESSION['mensajeExito'] ?></span>
+                        <?php unset($_SESSION['mensajeExito']);
+                    }
+                    ?>
+                </div>
             </form>
         </div>
         <div class="card-footer">

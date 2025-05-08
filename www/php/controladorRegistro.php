@@ -62,9 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     if (isset($mensaje)) {
-        $_SESSION['mensajeExito'] = $mensajeExito;
-    } else if(isset($mensajeExito)) {
         $_SESSION['mensaje_error'] = $mensaje;
+    } else if(isset($mensajeExito)) {
+        $_SESSION['mensajeExito'] = $mensajeExito;
     }
     header('Location: registro.php');
     exit();

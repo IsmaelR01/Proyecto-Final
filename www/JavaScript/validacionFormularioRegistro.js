@@ -12,11 +12,12 @@ function validar(eventoPorDefecto) {
     let dniValido = validarDni();
     let usuarioValido = validarUsuario();
     let emailvalido = validarEmail();
+    let direccionValida = validarDireccion();
     let contrasenaValida = validarContrasena();
 
     let formularioValido = false;
 
-    if (dniValido && usuarioValido && emailvalido  && contrasenaValida) {
+    if (dniValido && usuarioValido && emailvalido && direccionValida  && contrasenaValida) {
         formularioValido = true;
     } else {
         eventoPorDefecto.preventDefault();
@@ -94,6 +95,26 @@ function validarUsuario() {
         devolver = false;
     } else {
         document.getElementById('usuario').className = "form-control exito";
+    }
+    return devolver;
+}
+
+function validarDireccion() {
+    let direccion = document.getElementById('direccion').value;
+    let resultado = document.getElementById('resultado');
+    let devolver = true;
+
+    if (direccion === "") {
+        resultado.innerHTML += "La direccion no puede estar vacía.<br>";
+        document.getElementById('direccion').focus();
+        document.getElementById('direccion').className = "form-control error";
+        devolver = false;
+    } else if (!/^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ\s,\.]+(\d{1,5})?(\s?[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+)?(\s?\d{5})?(\s?[a-zA-Z\s]+)?$/.test(direccion)) {
+        resultado.innerHTML += "La dirección no cumple con los requisitos.<br>";
+        document.getElementById('direccion').className = "form-control error";
+        devolver = false;
+    } else {
+        document.getElementById('direccion').className = "form-control exito";
     }
     return devolver;
 }

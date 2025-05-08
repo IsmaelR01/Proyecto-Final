@@ -63,9 +63,9 @@ if(isset($usuarioSeleccionadoId)) {
             <?php echo $_SESSION['mensaje']; unset($_SESSION['mensaje']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    <?php } else if(isset($_SESSION['error'])){ ?>
+    <?php } else if(isset($_SESSION['mensaje_error'])){ ?>
         <div class="alert alert-danger alert-dismissible fade show text-center w-75" role="alert">
-            <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+            <?php echo $_SESSION['mensaje_error']; unset($_SESSION['mensaje_error']); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php } ?>
