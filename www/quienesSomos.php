@@ -24,7 +24,7 @@ $resultado = $consultaProveedores->get_result();
 
         <h2 class="section-title">Quiénes Somos</h2>
 
-        <div class="col-md-8 mx-auto mb-5">
+        <div class="col-12 col-md-8 mx-auto mb-5 px-3">
             <div class="card shadow-sm rounded-4 bg-light border-0">
                 <div class="card-body text-center">
                     <h4 class="card-title mb-3">Nuestra Historia</h4>
@@ -40,7 +40,7 @@ $resultado = $consultaProveedores->get_result();
             </div>
         </div>
 
-        <div class="col-md-8 mx-auto mb-5">
+        <div class="col-12 col-md-8 mx-auto mb-5 px-3">
             <div class="card shadow-sm rounded-4 bg-light border-0">
                 <div class="card-body text-center">
                     <h4 class="card-title mb-3">Misión</h4>
@@ -53,7 +53,7 @@ $resultado = $consultaProveedores->get_result();
             </div>
         </div>
 
-        <div class="col-md-8 mx-auto mb-5">
+        <div class="col-12 col-md-8 mx-auto mb-5 px-3">
             <div class="card shadow-sm rounded-4 bg-light border-0">
                 <div class="card-body text-center">
                     <h4 class="card-title mb-3">Visión a Futuro</h4>
@@ -99,33 +99,37 @@ $resultado = $consultaProveedores->get_result();
                 <div class="modal fade" id="añadirProveedorModal" tabindex="-1" aria-labelledby="añadirProveedorLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form action="php/añadirProveedor.php" method="POST">
+                            <form action="php/añadirProveedor.php" id="formularioAñadirProveedor"  method="POST">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="añadirProveedorLabel">Añadir Proveedor</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    <button type="button" id="botonAñadirCerrarProveedor" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label class="form-label">CIF</label>
-                                        <input type="text" name="CIF" class="form-control" required maxlength="9">
+                                        <input type="text" id="añadirCIF" name="CIF" class="form-control">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Nombre</label>
-                                        <input type="text" name="nombre_proveedor" class="form-control" required>
+                                        <input type="text" id="añadirNombre_proveedor" name="nombre_proveedor" class="form-control">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Dirección</label>
-                                        <input type="text" name="direccion_proveedor" class="form-control" required>
+                                        <input type="text" id="añadirDireccion_proveedor" name="direccion_proveedor" class="form-control">
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label">Teléfono</label>
-                                        <input type="text" name="telefono" class="form-control" required>
+                                        <input type="text" id="añadirTelefono" name="telefono" class="form-control">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success">Guardar</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" id="botonAñadirEnviarProveedor" class="btn btn-success">Guardar</button>
+                                    <button type="button" id="botonAñadirCancelarProveedor" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div><br>
+
+                                <div id="resultadoProveedor" style="color: red; margin-bottom: 10px; text-align: center;">
+
                                 </div>
                             </form>
                         </div>
@@ -135,7 +139,7 @@ $resultado = $consultaProveedores->get_result();
                 <!-- FIN: Modal Añadir Proveedor -->
 
                 <?php while ($proveedor = $resultado->fetch_assoc()) {  ?>
-                <div class="col-6 col-sm-4 col-md-3">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="card border-0 shadow-sm h-100">
                         <div class="card-body text-center">
                             <h5 class="card-title"><?php echo htmlspecialchars($proveedor['nombre_proveedor']); ?></h5>
@@ -199,5 +203,6 @@ $resultado = $consultaProveedores->get_result();
 
   <?php include 'php/footer.php'; ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="JavaScript/validacionFormularioAñadirProveedor.js"></script>
 </body>
 </html>

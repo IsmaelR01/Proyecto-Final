@@ -5,7 +5,7 @@
 
         <div class="collapse navbar-collapse" id="barraNavegacion">
             <ul class="navbar-nav ms-auto">
-                <li id="productos" class="nav-item ms-2 mt-2 position-relative"><a class="nav-link" href="jerseys.php">Productos</a>
+                <li id="productos" class="nav-item ms-2 mt-2 position-relative"><a class="nav-link" href="#">Productos</a>
                     <div id="submenu-productos" class="submenu-productos">
                         <a href="jerseys.php" class="d-block text-white px-3 py-1">Jerseys</a>
                         <a href="chaquetas.php" class="d-block text-white px-3 py-1">Chaquetas</a>

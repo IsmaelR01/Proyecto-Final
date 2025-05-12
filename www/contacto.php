@@ -15,11 +15,11 @@ session_start();
 </head>
 <body>
     <?php include 'php/navbar.php'; ?>
-    <main class="container my-5">
+    <main class="container-fluid px-3 px-md-5 my-5">
         <h2 class="mb-4 text-center">Contáctanos</h2>
         <div class="row mb-4">
             <!-- Card: Información de contacto -->
-            <div class="col-md-6 mb-3">
+            <div class="col-12 col-md-6 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title"><i class="bi bi-geo-alt-fill text-primary me-2"></i>Dirección física</h5>
@@ -42,7 +42,7 @@ session_start();
             </div>
 
             <!-- Card: Mapa de ubicación -->
-            <div class="col-md-6 mb-3">
+            <div class="col-12 col-md-6 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body text-center">
                         <h5 class="card-title"><i class="bi bi-map-fill text-info me-2"></i>Ubicación en el mapa</h5>

@@ -17,6 +17,18 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
     <title>Productos - Chaquetas</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .card {
+            border: 2px solid #111;
+            transition: box-shadow 0.3s ease, border 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border: 2px solid #0659b8;
+        }
+
+    </style>
 </head>
 <body>
     <?php include 'php/navbar.php'; ?>  
@@ -58,32 +70,32 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                             <input type="hidden" name="origen" value="chaquetas">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="añadirModalLabel">Añadir Nuevo Producto</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                <button type="button" id="botonAñadirCerrar" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label class="form-label">Código</label>
-                                    <input type="text" class="form-control" name="cod_producto" required maxlength="5">
+                                    <input type="text" class="form-control" id="añadirCod_producto" name="cod_producto">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" required maxlength="40">
+                                    <input type="text" class="form-control" id="añadirNombre" name="nombre">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Modelo</label>
-                                    <input type="text" class="form-control" name="modelo" required>
+                                    <input type="text" class="form-control" id="añadirModelo" name="modelo">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Descripción</label>
-                                    <textarea class="form-control" name="descripcion"></textarea>
+                                    <textarea class="form-control" id="añadirDescripcion" name="descripcion"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Precio (sin € y los decimales con .)</label>
-                                    <input type="text" class="form-control" name="precio" required>
+                                    <input type="text" class="form-control" id="añadirPrecio" name="precio">
                                 </div>
                                 <div class="mb-3">
                                     <label for="cif" class="form-label">Proveedor</label>
-                                    <select name="cif" id="cif" class="form-select" required>
+                                    <select name="cif" id="cif" class="form-select">
                                         <option value="" selected disabled>Selecciona un proveedor</option>
                                         <?php while ($proveedor = $consultaProveedores->fetch_assoc()): ?>
                                             <option value="<?php echo htmlspecialchars($proveedor['CIF']); ?>">
@@ -94,12 +106,15 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                 </div>
                                 <div class="mb-3">
                                     <label for="imagen" class="form-label">Seleccionar imagen</label>
-                                    <input type="file" class="form-control" id="imagen" name="imagen" accept="image/jpeg, image/png" required>
+                                    <input type="file" class="form-control" id="añadirImagen" name="imagen" accept="image/jpeg, image/png">
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Añadir Producto</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" id="botonAñadirEnviar" class="btn btn-success">Añadir Producto</button>
+                                <button type="button" id="botonAñadirCancelar"class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            </div><br>
+                            <div id="resultadoProducto" style="color: red; margin-bottom: 10px; text-align: center;">
+
                             </div>
                         </form>
                     </div>
@@ -171,45 +186,52 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                         <div class="modal fade" id="editar_<?php echo $identificadorModal; ?>" tabindex="-1" aria-labelledby="editar_<?php echo $identificadorModal; ?>" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
-                                    <form action="php/editarProducto.php" method="POST" enctype="multipart/form-data">
+                                    <form action="php/editarProducto.php" id="formularioEditarProducto_<?php echo htmlspecialchars($producto['cod_producto']); ?>" method="POST" enctype="multipart/form-data">
                                         <input type="hidden" name="origen" value="chaquetas">
                                         <div class="modal-header">
                                             <h5 class="modal-title">Editar Producto</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            <button type="button" class="btn-close" id="botonEditarCerrar_<?php echo htmlspecialchars($producto['cod_producto']); ?>" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body">
                                             <input type="hidden" name="cod_producto" value="<?php echo htmlspecialchars($producto['cod_producto']); ?>">
                                             
                                             <div class="mb-3">
                                                 <label class="form-label">Nombre</label>
-                                                <input type="text" class="form-control" name="nombre" required value="<?php echo htmlspecialchars($producto['nombre']); ?>">
+                                                <input type="text" class="form-control" id="editarNombre_<?php echo htmlspecialchars($producto['cod_producto']); ?>" name="nombre" value="<?php echo htmlspecialchars($producto['nombre']); ?>">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Modelo</label>
-                                                <input type="text" class="form-control" name="modelo" required value="<?php echo htmlspecialchars($producto['modelo']); ?>">
+                                                <input type="text" class="form-control" id="editarModelo_<?php echo htmlspecialchars($producto['cod_producto']); ?>" name="modelo" value="<?php echo htmlspecialchars($producto['modelo']); ?>">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Descripción</label>
-                                                <textarea class="form-control" name="descripcion"><?php echo htmlspecialchars($producto['descripcion']); ?></textarea>
+                                                <textarea class="form-control" id="editarDescripcion_<?php echo htmlspecialchars($producto['cod_producto']); ?>" name="descripcion"><?php echo htmlspecialchars($producto['descripcion']); ?></textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Precio (sin € y los decimales con .)</label>
-                                                <input type="text" class="form-control" name="precio" required value="<?php echo htmlspecialchars($producto['precio']); ?>">
+                                                <input type="text" class="form-control" id="editarPrecio_<?php echo htmlspecialchars($producto['cod_producto']); ?>" name="precio" value="<?php echo htmlspecialchars($producto['precio']); ?>">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Imagen (subir nueva si se desea)</label>
-                                                <input type="file" class="form-control" name="imagen" accept="image/jpeg, image/png">
+                                                <input type="file" class="form-control" id="editarImagen_<?php echo htmlspecialchars($producto['cod_producto']); ?>" name="imagen" accept="image/jpeg, image/png">
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="submit" id="botonEditarEnviar_<?php echo htmlspecialchars($producto['cod_producto']); ?>" class="btn btn-primary">Guardar cambios</button>
+                                            <button type="button" id="botonEditarCancelar_<?php echo htmlspecialchars($producto['cod_producto']); ?>" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        </div><br>
+                                        <div id="resultadoEditarProducto_<?php echo htmlspecialchars($producto['cod_producto']); ?>" style="color: red; margin-bottom: 10px; text-align: center;">
+
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                iniciarEditarProducto('<?php echo htmlspecialchars($producto['cod_producto']); ?>');
+                            });
+                        </script>
                     </div>
                 </div>
             <?php } ?>
@@ -219,5 +241,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
 
     <?php include 'php/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JavaScript/validacionFormularioAñadirProducto.js"></script>
+    <script src="../JavaScript/validacionFormularioEditarProducto.js"></script>
 </body>
 </html>

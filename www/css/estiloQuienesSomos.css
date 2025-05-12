@@ -7,6 +7,7 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 
@@ -38,6 +39,10 @@ body {
     border: none;
     border-radius: 1rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .card-body {
@@ -63,8 +68,16 @@ body {
     color: #6c757d;
 }
 
-@media (max-width: 768px) {
+iframe {
+    max-width: 100%;
+}
+
+@media (max-width: 576px) {
     .card-body {
-        padding: 1.5rem;
+        padding: 1rem;
+    }
+
+    .card-text.lead {
+        font-size: 1rem;
     }
 }

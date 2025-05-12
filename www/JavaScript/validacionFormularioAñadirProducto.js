@@ -1,59 +1,63 @@
-window.addEventListener('load', iniciar, false);
+window.addEventListener('load', iniciarAñadirProducto, false);
 
-function iniciar() {
-    const enviar = document.getElementById('botonAñadirEnviar'); // ID del botón de submit
-    enviar.addEventListener('click', validarFormularioProducto, false); // Cambié el evento para usar click
-    const cancelar = document.getElementById('botonAñadirCancelar'); // Botón "Cancelar"
-    cancelar.addEventListener('click', resetearFormulario, false); // Resetear formulario al hacer clic
+function iniciarAñadirProducto() {
+    const enviar = document.getElementById('botonAñadirEnviar'); 
+    enviar.addEventListener('click', validarFormularioAñadirProducto, false); 
+    const cancelar = document.getElementById('botonAñadirCancelar');
+    cancelar.addEventListener('click', resetearFormularioAñadirProducto, false); 
+    const cerrar = document.getElementById('botonAñadirCerrar');
+    cerrar.addEventListener('click', resetearFormularioAñadirProducto, false); 
 }
 
-function validarFormularioProducto(evento) {
+function validarFormularioAñadirProducto(evento) {
     const resultado = document.getElementById('resultadoProducto');
-    resultado.innerHTML = ""; // Limpiar resultados de validación al principio
+    resultado.innerHTML = ""; 
 
-    let codOk = validarCodigo();
-    let nombreOk = validarNombre();
-    let modeloOk = validarModelo();
-    let precioOk = validarPrecio();
-    let proveedorOk = validarCif();
-    let descripcionOk = validarDescripcion();
-    let imagenOk = validarImagen(); // Solo si el input es obligatorio
+    let codigoProducto = validarAñadirCodigo();
+    let nombre = validarAñadirNombre();
+    let modelo = validarAñadirModelo();
+    let precio= validarAñadirPrecio();
+    let proveedor = validarCif();
+    let descripcion = validarAñadirDescripcion();
+    let imagen = validarAñadirImagen(); 
 
-    let formularioOk = codOk && nombreOk && modeloOk && precioOk && proveedorOk && descripcionOk && imagenOk;
+    let formularioValido = false;
 
-    if (!formularioOk) {
-        evento.preventDefault(); // Prevenir el envío del formulario si alguna validación falla
+    if (codigoProducto && nombre && modelo && precio && proveedor && descripcion && imagen) {
+        formularioValido = true;
+    } else {
+        evento.preventDefault();
+        formularioValido = false;
     }
 
-    return formularioOk;
+    return formularioValido;
 }
 
-function validarCodigo() {
-    const cod = document.getElementById('cod_producto');
+function validarAñadirCodigo() {
+    const codigoProducto = document.getElementById('añadirCod_producto');
     const resultado = document.getElementById('resultadoProducto');
     let valido = true;
 
-    // Limpiar mensaje de error antes de validar
     resultado.innerHTML = ""; 
 
-    if (cod.value.trim() === "") {
+    if (codigoProducto.value.trim() === "") {
         resultado.innerHTML += "El código no puede estar vacío.<br>";
-        cod.className = "form-control error";
-        cod.focus();
+        codigoProducto.className = "form-control error";
+        codigoProducto.focus();
         valido = false;
-    } else if (!/^[A-Za-z0-9]{1,5}$/.test(cod.value)) {
+    } else if (!/^[CJ][0-9]{4}$/.test(codigoProducto.value)) {
         resultado.innerHTML += "El código debe tener máximo 5 caracteres alfanuméricos.<br>";
-        cod.className = "form-control error";
+        codigoProducto.className = "form-control error";
         valido = false;
     } else {
-        cod.className = "form-control exito";
+        codigoProducto.className = "form-control exito";
     }
 
     return valido;
 }
 
-function validarNombre() {
-    const nombre = document.getElementById('nombre');
+function validarAñadirNombre() {
+    const nombre = document.getElementById('añadirNombre');
     const resultado = document.getElementById('resultadoProducto');
     let valido = true;
 
@@ -67,6 +71,10 @@ function validarNombre() {
         resultado.innerHTML += "El nombre no puede superar los 40 caracteres.<br>";
         nombre.className = "form-control error";
         valido = false;
+    } else if (!/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/.test(nombre.value)){
+        resultado.innerHTML += "El nombre no cumple con el formato.<br>";
+        nombre.className = "form-control error";
+        valido = false;
     } else {
         nombre.className = "form-control exito";
     }
@@ -74,26 +82,31 @@ function validarNombre() {
     return valido;
 }
 
-function validarModelo() {
-    const modelo = document.getElementById('modelo');
+function validarAñadirModelo() {
+    const modelo = document.getElementById('añadirModelo');
     const resultado = document.getElementById('resultadoProducto');
     let valido = true;
 
 
-    if (modelo.value.trim() === "" || isNaN(modelo.value) || Number(modelo.value) < 0) {
-        resultado.innerHTML += "El modelo debe ser un número positivo.<br>";
+    if (modelo.value.trim() === "" || isNaN(modelo.value) || Number(modelo.value) < 2010 || Number(modelo.value > 2035)) {
+        resultado.innerHTML += "El modelo debe estar comprendido entre 2010 y 2035.<br>";
         modelo.className = "form-control error";
         modelo.focus();
         valido = false;
-    } else {
+    } else if(!/^\d{4}$/.test(modelo.value)) {
+        resultado.innerHTML += "El modelo no cumple con el formato numérico establecido.<br>";
+        modelo.className = "form-control error";
+        valido = false;
+    }
+    else {
         modelo.className = "form-control exito";
     }
 
     return valido;
 }
 
-function validarPrecio() {
-    const precio = document.getElementById('precio');
+function validarAñadirPrecio() {
+    const precio = document.getElementById('añadirPrecio');
     const resultado = document.getElementById('resultadoProducto');
     let valido = true;
 
@@ -103,6 +116,10 @@ function validarPrecio() {
         precio.className = "form-control error";
         precio.focus();
         valido = false;
+    } else if (precio.value.trim() === "" || isNaN(precio.value) || Number(precio.value) < 9.99 || Number(precio.value > 999.99)) {
+        resultado.innerHTML += "El precio debe ser un número decimal, estar comprendido entre 9.99 y 999.99 y no puede estar vacío<br>";
+        precio.className = "form-control error";
+        valido = false;
     } else {
         precio.className = "form-control exito";
     }
@@ -110,8 +127,8 @@ function validarPrecio() {
     return valido;
 }
 
-function validarDescripcion() {
-    const descripcion = document.getElementById('descripcion');
+function validarAñadirDescripcion() {
+    const descripcion = document.getElementById('añadirDescripcion');
     const resultado = document.getElementById('resultadoProducto');
     let valido = true;
 
@@ -146,8 +163,8 @@ function validarCif() {
     return valido;
 }
 
-function validarImagen() {
-    const imagen = document.getElementById('imagen');
+function validarAñadirImagen() {
+    const imagen = document.getElementById('añadirImagen');
     const resultado = document.getElementById('resultadoProducto');
     let valido = true;
 
@@ -171,15 +188,14 @@ function validarImagen() {
     return valido;
 }
 
-function resetearFormulario() {
+function resetearFormularioAñadirProducto() {
     const resultado = document.getElementById('resultadoProducto');
     const inputs = document.getElementsByClassName('form-control');
     
-    // Limpiar los mensajes de error
     resultado.innerHTML = "";
 
-    // Eliminar clases de éxito y error
     for (let i = 0; i < inputs.length; i++) {
         inputs[i].classList.remove('error', 'exito');
+        inputs[i].value = "";
     }
 }
