@@ -97,7 +97,7 @@ $resultado = $consultaProveedores->get_result();
                 <!-- INICIO: Modal Añadir Proveedor -->
                 <?php if (isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
                 <div class="modal fade" id="añadirProveedorModal" tabindex="-1" aria-labelledby="añadirProveedorLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <form action="php/añadirProveedor.php" id="formularioAñadirProveedor"  method="POST">
                                 <div class="modal-header">
@@ -163,38 +163,46 @@ $resultado = $consultaProveedores->get_result();
                     </div>
                 </div>
 
-                    <!-- INICIO: Modal Editar Proveedor -->
+                <!-- INICIO: Modal Editar Proveedor -->
                 <div class="modal fade" id="editarProveedor_<?php echo $proveedor['CIF']; ?>" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <form action="php/editarProveedor.php" method="POST">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Editar Proveedor</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    <button type="button" id="botonEditarCerrar" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" name="CIF" value="<?php echo htmlspecialchars($proveedor['CIF']); ?>">
                                     <div class="mb-3">
                                         <label class="form-label">Nombre</label>
-                                        <input type="text" name="nombre_proveedor" class="form-control" required value="<?php echo htmlspecialchars($proveedor['nombre_proveedor']); ?>">
+                                        <input type="text" id="editarNombre_proveedor" name="nombre_proveedor" class="form-control" value="<?php echo htmlspecialchars($proveedor['nombre_proveedor']); ?>">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Dirección</label>
-                                        <input type="text" name="direccion_proveedor" class="form-control" required value="<?php echo htmlspecialchars($proveedor['direccion_proveedor']); ?>">
+                                        <input type="text" id="editarDireccion_proveedor" name="direccion_proveedor" class="form-control" value="<?php echo htmlspecialchars($proveedor['direccion_proveedor']); ?>">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Teléfono</label>
-                                        <input type="text" name="telefono" class="form-control" required value="<?php echo htmlspecialchars($proveedor['telefono']); ?>">
+                                        <input type="text" id="editarTelefono" name="telefono" class="form-control" value="<?php echo htmlspecialchars($proveedor['telefono']); ?>">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" id="botonEditarEnviar" class="btn btn-primary">Guardar Cambios</button>
+                                    <button type="button" id="botonEditarCancelar" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div><br>
+                                <div id="resultadoEditarProveedor" style="color: red; margin-bottom: 10px; text-align: center;">
+
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        iniciarEditarProveedor('<?php echo htmlspecialchars($producto['CIF']); ?>');
+                    });
+                </script>
                 <!-- FIN: Modal Editar Proveedor -->
                 <?php } ?>
             </div>
@@ -204,5 +212,6 @@ $resultado = $consultaProveedores->get_result();
   <?php include 'php/footer.php'; ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="JavaScript/validacionFormularioAñadirProveedor.js"></script>
+  <script src="JavaScript/validacionFormularioEditarProveedor.js"></script>
 </body>
 </html>

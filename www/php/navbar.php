@@ -21,14 +21,17 @@
             <?php if (isset($_SESSION['usuario'])) { ?>
                 <div class="dropdown">
                     <a class="btn btn-outline-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="perfilDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="imagenes/emoticono.jpg" alt="Perfil" class="rounded-circle me-2" width="32" height="32">
+                        <img src="imagenes/fotosPerfil/emoticono.jpg" alt="Perfil" class="rounded-circle me-2" width="32" height="32">
                         <span><?php echo htmlspecialchars($_SESSION['usuario']); ?></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="perfilDropdown">
-                        <li><a class="dropdown-item text-danger" href="php/logout.php">Cerrar sesión</a></li>
                         <?php if($_SESSION['rol'] === 'admin') { ?>
                             <li><a class="dropdown-item" href="php/administrarUsuarios.php">Administrar Usuarios</a></li>
+                        <?php } 
+                        if($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'cliente') { ?>
+                            <li><a class="dropdown-item" href="php/cuenta.php">Mi cuenta</a></li>
                         <?php } ?>
+                        <li><a class="dropdown-item text-danger" href="php/logout.php">Cerrar sesión</a></li>
                     </ul>
                 </div>
             <?php  } else { ?>

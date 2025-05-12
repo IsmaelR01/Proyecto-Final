@@ -109,7 +109,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
 
                                 <div class="mb-3">
                                     <label for="imagen" class="form-label">Seleccionar imagen</label>
-                                    <input type="file" class="form-control" id="añadirImagen" name="imagen" accept="image/jpeg, image/png">
+                                    <input type="file" class="form-control" id="añadirImagen" name="imagen" accept="image/jpeg, image/png, image/jpg">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -216,7 +216,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                             </div>
                                             <div class="mb-3">
                                                 <label for="imagen" class="form-label">Seleccionar imagen</label>
-                                                <input type="file" class="form-control" id="editarImagen_<?php echo htmlspecialchars($producto['cod_producto']); ?>" name="imagen" accept="image/jpeg, image/png">
+                                                <input type="file" class="form-control" id="editarImagen_<?php echo htmlspecialchars($producto['cod_producto']); ?>" name="imagen" accept="image/jpeg, image/png, image/jpg">
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -231,10 +231,10 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                             </div>
                         </div>
                         <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            iniciarEditarProducto('<?php echo htmlspecialchars($producto['cod_producto']); ?>');
-                        });
-                    </script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                iniciarEditarProducto('<?php echo htmlspecialchars($producto['cod_producto']); ?>');
+                            });
+                        </script>
                     </div>
                 </div>
             <?php } ?>
