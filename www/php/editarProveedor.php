@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombreProveedor = validarNombre(filter_input(INPUT_POST, 'nombre_proveedor'));
     $direccionProveedor = validarDireccion(filter_input(INPUT_POST, 'direccion_proveedor'));
     $telefonoProveedor = validarTelefono(filter_input(INPUT_POST, 'telefono'));
-    
+
     $conexionBaseDatos = Conexion::conexionBD();
 
     if (!$cif || !$nombreProveedor || !$direccionProveedor || !$telefonoProveedor) {
@@ -27,10 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $editarProveedor->bind_param("ssss", $nombreProveedor, $direccionProveedor, $telefonoProveedor, $cif);
 
         if ($editarProveedor->execute()) {
-            $_SESSION['mensaje'] = "Proveedor editado correctamente.";
+            if ($editarProveedor->affected_rows > 0) {
+                $_SESSION['mensaje'] = "Proveedor editado correctamente.";
+            } else {
+                $_SESSION['error'] = "No se realizaron cambios porque los datos de los campos son iguales.";
+            }
         } else {
-            $_SESSION['error'] = "Error al editar el proveedor.";
+            $_SESSION['error'] = "Error al editar el proveedor";
         }
+
         header('Location: ../quienesSomos.php');
         exit();
     }

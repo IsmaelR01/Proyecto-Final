@@ -14,7 +14,7 @@ if (filter_has_var(INPUT_POST, 'sesion')) {
         $mensaje = "El usuario o la contraseña no cumplen con los requisitos o los campos están vacíos.";
     } else {
         try {
-            $consultaUsuario = $conexionBaseDatos->prepare("SELECT u.dni, u.nombre_usuario, r.tipo AS usuarioRol, u.clave FROM Usuarios AS u INNER JOIN Roles AS r ON u.id_rol = r.id_rol WHERE u.nombre_usuario = ?");
+            $consultaUsuario = $conexionBaseDatos->prepare("SELECT u.dni, u.nombre_usuario, r.tipo AS usuarioRol, u.clave, u.perfil FROM Usuarios AS u INNER JOIN Roles AS r ON u.id_rol = r.id_rol WHERE u.nombre_usuario = ?");
             $consultaUsuario->bind_param("s", $usuario);  
             $consultaUsuario->execute();
             $resultado = $consultaUsuario->get_result();
@@ -31,6 +31,7 @@ if (filter_has_var(INPUT_POST, 'sesion')) {
                     $_SESSION['rol'] = $rol;
                     $identificadorUsuario = $usuarioBaseDatos['dni'];
                     $_SESSION['identificadorUsuario'] = $identificadorUsuario;
+                    $_SESSION['perfil'] = $usuarioBaseDatos['perfil'] ?? 'imagenes/fotosPerfil/emoticono.jpg';
                     switch ($rol) {
                         case 'admin':
                             header('Location: ../index.php');

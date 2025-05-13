@@ -3,7 +3,6 @@ session_start();
 require_once 'Conexion.php';
 include 'funciones_validar.php';
 
-// Solo permitir admins
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     header('Location: ../index.php');
     exit();
@@ -19,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $precioProducto = validarPrecio(filter_input(INPUT_POST,'precio'));
     $conexionBaseDatos = Conexion::conexionBD();
 
-    // Gestionar nueva imagen si se envía
     $nuevaImagen = '';
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
         $nombreImagen = basename($_FILES['imagen']['name']);
@@ -31,13 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!in_array($extensionArchivo, $extensionesPermitidas)) {
             $_SESSION['error'] = "Solo se permiten imágenes JPG, JPEG o PNG.";
-            header('Location: ../'.$origen.'.php');
+            header('Location: ../' . $origen . '.php');
             exit();
         }
 
         if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaServidor)) {
             $_SESSION['error'] = "Error al subir la nueva imagen.";
-            header('Location: ../'.$origen.'.php');
+            header('Location: ../' . $origen . '.php');
             exit();
         }
         $nuevaImagen = $rutaDestino;
@@ -45,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$cod_producto || !$nombre || !$modelo || !$descripcion || !$precioProducto) {
         $_SESSION['error'] = "Alguno de los campos introducidos no son correctos.";
-        header('Location: ../'.$origen.'.php');
+        header('Location: ../' . $origen . '.php');
         exit();
     } else {
         if ($nuevaImagen !== '') {
@@ -57,11 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($editarProducto->execute()) {
-            $_SESSION['mensaje'] = "Producto editado correctamente.";
+            if ($editarProducto->affected_rows > 0) {
+                $_SESSION['mensaje'] = "Producto editado correctamente.";
+            } else {
+                $_SESSION['error'] = "No se realizaron los cambios porque los datos de los campos son iguales";
+            }
         } else {
             $_SESSION['error'] = "Error al editar el producto.";
         }
-        header('Location: ../'.$origen.'.php');
+
+        header('Location: ../' . $origen . '.php');
         exit();
     }
 }

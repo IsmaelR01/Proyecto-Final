@@ -74,6 +74,16 @@ $resultado = $consultaUsuario->get_result();
                                 </div>
 
                                 <div class="mb-3">
+                                    <label class="form-label">Introduce la contraseña actual</label>
+                                    <input type="password" class="form-control form-control-sm" name="contrasena_antigua">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Introduce la contraseña nueva</label>
+                                    <input type="password" class="form-control form-control-sm" name="contrasena_nueva">
+                                </div>
+
+                                <div class="mb-3">
                                     <label class="form-label">Email:</label>
                                     <input type="email" class="form-control form-control-sm" name="email" value="<?php echo htmlspecialchars($resultadoUsuario['email']) ?>" disabled>
                                 </div>

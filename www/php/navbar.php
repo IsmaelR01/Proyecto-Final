@@ -21,8 +21,7 @@
             <?php if (isset($_SESSION['usuario'])) { ?>
                 <div class="dropdown">
                     <a class="btn btn-outline-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="perfilDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <?php $fotoPerfil = isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'imagenes/fotosPerfil/emoticono.jpg';?> 
-                        <img src="<?php echo htmlspecialchars($fotoPerfil); ?>" alt="Perfil" class="rounded-circle me-2" width="32" height="32">
+                        <img src="<?php echo htmlspecialchars($_SESSION['perfil'] ?? 'imagenes/fotosPerfil/emoticono.jpg'); ?>" alt="Perfil" class="rounded-circle me-2" width="32" height="32">
                         <span><?php echo htmlspecialchars($_SESSION['usuario']); ?></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="perfilDropdown">
