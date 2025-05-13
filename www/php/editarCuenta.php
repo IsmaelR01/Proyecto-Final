@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conexionBaseDatos = Conexion::conexionBD();
 
     $nuevaImagen = '';
-    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-        $nombreImagen = basename($_FILES['imagen']['name']);
+    if (isset($_FILES['perfil']) && $_FILES['perfil']['error'] === UPLOAD_ERR_OK) {
+        $nombreImagen = basename($_FILES['perfil']['name']);
         $rutaDestino = 'imagenes/fotosPerfil/' . $nombreImagen;
         $rutaServidor = '../' . $rutaDestino;
 
@@ -30,13 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-        if (file_exists($rutaServidor)) {
-            $_SESSION['error'] = "La imagen seleccionada ya existe en el servidor. Elige otra.";
-            header('Location: cuenta.php');
-            exit();
-        }
-
-        if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaServidor)) {
+        if (!move_uploaded_file($_FILES['perfil']['tmp_name'], $rutaServidor)) {
             $_SESSION['error'] = "Error al subir la nueva imagen.";
             header('Location: cuenta.php');
             exit();
@@ -48,19 +42,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$nombre || !$direccion) {
         $_SESSION['error'] = "Alguno de los campos introducidos no son correctos.";
-        $_SESSION['accion'] = 'editar';
-        $_SESSION['seleccionUsuario'] = $dniUsuarioSeleccionado;
         header('Location: cuenta.php');
         exit();
     } else {
         if($nuevaImagen !== '') {
-            $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, direccion = ?, imagen = ? WHERE dni = ?");
+            $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, direccion = ?, perfil = ? WHERE dni = ?");
             $editarUsuario->bind_param("ssss", $nombre, $direccion, $nuevaImagen,$dniUsuarioSeleccionado);
         } else {
             $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, direccion = ? WHERE dni = ?");
             $editarUsuario->bind_param("sss", $nombre, $direccion, $dniUsuarioSeleccionado);
         }
         if ($editarUsuario->execute()) {
+            if($nuevaImagen !== '') {
+                $_SESSION['perfil'] = $nuevaImagen;
+            }
             $_SESSION['mensaje'] = "Se han guardado correctamente los cambios";
         } else {
             $_SESSION['error'] = "Error al guardar los cambios";

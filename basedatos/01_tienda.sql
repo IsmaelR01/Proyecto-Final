@@ -14,10 +14,11 @@ CREATE TABLE IF NOT EXISTS Roles (
 
 CREATE TABLE IF NOT EXISTS Usuarios (
     dni VARCHAR(9) PRIMARY KEY,
-    nombre_usuario VARCHAR(25) NOT NULL,
+    nombre_usuario VARCHAR(25) UNIQUE NOT NULL,
     clave VARCHAR(300) NOT NULL,
     direccion VARCHAR(60),
     email VARCHAR(30),
+    perfil varchar(550) DEFAULT 'imagenes/fotosPerfil/emoticono.jpg',
     id_rol INT,
     FOREIGN KEY (id_rol) REFERENCES Roles(id_rol) ON UPDATE CASCADE ON DELETE RESTRICT
 );

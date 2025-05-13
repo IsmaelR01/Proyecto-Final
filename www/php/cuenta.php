@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['identificadorUsuario'])) {
+    header('Location: ../index.php');
+    exit();
+}
 require_once 'Conexion.php';
 $conexionBaseDatos = Conexion::conexionBD();
 $identificadorUsuario = $_SESSION['identificadorUsuario'];
@@ -60,8 +64,8 @@ $resultado = $consultaUsuario->get_result();
 
                                 <div class="mb-3 text-center">
                                     <label class="form-label">Foto de perfil:</label><br>
-                                    <img src="../imagenes/fotosPerfil/emoticono.jpg" alt="Foto de perfil" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover;">
-                                    <input type="file" class="form-control form-control-sm mt-2" name="imagen" accept="image/jpeg, image/png, image/jpg">
+                                    <img src="../<?php echo htmlspecialchars($_SESSION['perfil'] ?? 'imagenes/fotosPerfil/emoticono.jpg'); ?>" alt="Foto de perfil" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover;">
+                                    <input type="file" class="form-control form-control-sm mt-2" name="perfil" accept="image/jpeg, image/png, image/jpg">
                                 </div>
 
                                 <div class="mb-3">

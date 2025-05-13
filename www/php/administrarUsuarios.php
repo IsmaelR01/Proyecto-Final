@@ -80,7 +80,7 @@ if(isset($usuarioSeleccionadoId)) {
                     <label for="accion" class="form-label">Selecciona una acción:</label>
                     <select class="form-select text-center form-select-sm mx-auto" style="width: 60%;" name="accion" id="accion">
                         <option value="">-- Elige una opción --</option>
-                        <option value="añadir" <?php if ($esEditar) echo 'selected' ?>>Añadir Usuario</option>
+                        <option value="añadir" <?php if ($esAnadir) echo 'selected' ?>>Añadir Usuario</option>
                         <option value="editar" <?php if ($esEditar) echo 'selected' ?>>Editar Usuario</option>
                         <option value="eliminar" <?php if($esEliminar) echo 'selected' ?>>Eliminar Usuario</option>
                     </select>
