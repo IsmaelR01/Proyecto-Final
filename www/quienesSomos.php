@@ -198,11 +198,14 @@ $resultado = $consultaProveedores->get_result();
                         </div>
                     </div>
                 </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        iniciarEditarProveedor('<?php echo htmlspecialchars($producto['CIF']); ?>');
-                    });
-                </script>
+                <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            iniciarEditarProveedor('<?php echo htmlspecialchars($proveedor['CIF']); ?>');
+                        });
+                    </script>
+                <?php } ?>
+                
                 <!-- FIN: Modal Editar Proveedor -->
                 <?php } ?>
             </div>
@@ -211,7 +214,9 @@ $resultado = $consultaProveedores->get_result();
 
   <?php include 'php/footer.php'; ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="JavaScript/validacionFormularioAñadirProveedor.js"></script>
-  <script src="JavaScript/validacionFormularioEditarProveedor.js"></script>
+  <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
+    <script src="JavaScript/validacionFormularioAñadirProveedor.js"></script>
+    <script src="JavaScript/validacionFormularioEditarProveedor.js"></script>
+  <?php } ?>
 </body>
 </html>

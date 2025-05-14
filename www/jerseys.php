@@ -230,11 +230,13 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                 </div>
                             </div>
                         </div>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                iniciarEditarProducto('<?php echo htmlspecialchars($producto['cod_producto']); ?>');
-                            });
-                        </script>
+                        <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') {?>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    iniciarEditarProducto('<?php echo htmlspecialchars($producto['cod_producto']); ?>');
+                                });
+                            </script>
+                        <?php } ?>
                     </div>
                 </div>
             <?php } ?>
@@ -242,7 +244,10 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
     </main>
     <?php include 'php/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../JavaScript/validacionFormularioAñadirProducto.js"></script>
-    <script src="../JavaScript/validacionFormularioEditarProducto.js"></script>
+    <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') {?>
+        <script src="../JavaScript/validacionFormularioAñadirProducto.js"></script>
+        <script src="../JavaScript/validacionFormularioEditarProducto.js"></script>
+    <?php } ?> 
+    
 </body>
 </html>
