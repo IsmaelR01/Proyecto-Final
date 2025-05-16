@@ -24,8 +24,10 @@ class Conexion {
                 self::$conexion = new mysqli(self::$host,self::$usuario,self::$password,self::$baseDatos);
                 self::$conexion->set_charset("utf8mb4");
                 self::$conexion->query("SET NAMES 'utf8mb4' COLLATE 'utf8mb4_spanish_ci'");
+                self::$conexion->query("SET time_zone = 'Europe/Madrid'");
+
             } catch (Exception $e) {
-                $mensaje = "Error: " . $e->getMessage();
+                die("Error al conectar: " . $e->getMessage() . " Inténtalo de nuevo");
             }
         }
         return self::$conexion;

@@ -11,12 +11,12 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 
 // Solo responder a POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $origen = $_POST['origen'] ?? 'jerseys'; 
+    $origen = validarCadena(filter_input(INPUT_POST, 'origen'));
 
     $cod_producto = validarCodigoProducto(filter_input(INPUT_POST, 'cod_producto'));
     $nombre = validarNombre(filter_input(INPUT_POST, 'nombre'));
     $modelo = validarModelo(filter_input(INPUT_POST, 'modelo'));
-    $descripcion = filter_input(INPUT_POST, 'descripcion');
+    $descripcion = validarCadena(filter_input(INPUT_POST, 'descripcion'));
     $precioProducto = validarPrecio(filter_input(INPUT_POST, 'precio'));
     $cif = validarCif(filter_input(INPUT_POST, 'cif'));
 
@@ -56,10 +56,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $insertarProducto->bind_param("ssisdss", $cod_producto, $nombre, $modelo, $descripcion, $precioProducto, $cif, $rutaDestino);
 
         if ($insertarProducto->execute()) {
-            $_SESSION['mensaje'] = "Producto añadido correctamente.";
+            if ($insertarProducto->affected_rows > 0) {
+                $_SESSION['mensaje'] = "Producto añadido correctamente.";
+            } else {
+                $_SESSION['error'] = "No se ha añadido ningún producto. El código del producto ya existe.";
+            }
         } else {
-            $_SESSION['error'] = "Error al añadir el producto. Puede que el código ya exista.";
+            $_SESSION['error'] = "Error al ejecutar la inserción del producto.";
         }
+
+        // Cerrar consulta y conexión
+        $insertarProducto->close();
+        Conexion::cerrarConexionBD();
+
         header('Location: ../'.$origen.'.php');
         exit();
     }

@@ -1,17 +1,40 @@
 <?php
 session_start();
-if(!isset($_SESSION['identificadorUsuario'])) {
+if (!isset($_SESSION['identificadorUsuario'])) {
     header('Location: ../index.php');
     exit();
 }
+
 require_once 'Conexion.php';
 $conexionBaseDatos = Conexion::conexionBD();
+
 $identificadorUsuario = $_SESSION['identificadorUsuario'];
 $consultaUsuario = $conexionBaseDatos->prepare("SELECT * FROM Usuarios WHERE dni = ?");
 $consultaUsuario->bind_param("s", $identificadorUsuario);
-$consultaUsuario->execute();
-$resultado = $consultaUsuario->get_result();
+
+if ($consultaUsuario->execute()) {
+    $resultado = $consultaUsuario->get_result();
+
+    if ($resultado->num_rows === 0) {
+        $_SESSION['error'] = "No se encontró la información del usuario.";
+        $consultaUsuario->close();
+        Conexion::cerrarConexionBD();
+        header('Location: ../index.php');
+        exit();
+    }
+} else {
+    $_SESSION['error'] = "Error al obtener los datos del usuario.";
+    $consultaUsuario->close();
+    Conexion::cerrarConexionBD();
+    header('Location: ../index.php');
+    exit();
+}
+
+// Cerramos la conexión después de obtener los datos
+$consultaUsuario->close();
+Conexion::cerrarConexionBD();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">

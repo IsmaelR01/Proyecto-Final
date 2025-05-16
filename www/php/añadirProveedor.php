@@ -22,14 +22,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: ../quienesSomos.php');
         exit();
     } else {
-        $insertarProveedor = $conexionBaseDatos->prepare("INSERT INTO Proveedores (CIF, nombre_proveedor, direccion_proveedor,telefono) VALUES (?, ?, ?, ?)");
+        $insertarProveedor = $conexionBaseDatos->prepare("INSERT INTO Proveedores (CIF, nombre_proveedor, direccion_proveedor, telefono) VALUES (?, ?, ?, ?)");
         $insertarProveedor->bind_param("ssss", $cifProveedor, $nombreProveedor, $direccionProveedor, $telefonoProveedor);
 
         if ($insertarProveedor->execute()) {
-            $_SESSION['mensaje'] = "Proveedor añadido correctamente.";
+            if ($insertarProveedor->affected_rows > 0) {
+                $_SESSION['mensaje'] = "Proveedor añadido correctamente.";
+            } else {
+                $_SESSION['error'] = "No se ha añadido ningún proveedor. El CIF ya existe.";
+            }
         } else {
-            $_SESSION['error'] = "Error al añadir el proveedor. El CIF ya existe.";
+            $_SESSION['error'] = "Error al ejecutar la inserción del proveedor.";
         }
+
+        // Cerrar consulta y conexión
+        $insertarProveedor->close();
+        Conexion::cerrarConexionBD();
+
         header('Location: ../quienesSomos.php');
         exit();
     }

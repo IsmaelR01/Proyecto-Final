@@ -23,6 +23,8 @@ services:
       - mysql_data:/var/lib/mysql
       - ./basedatos:/docker-entrypoint-initdb.d 
       - ./mysql-conf.d:/etc/mysql/conf.d
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     networks:
       - app_network
 
@@ -39,6 +41,10 @@ services:
       - db
     networks:
       - app_network
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
 
   mailhog:
     image: mailhog/mailhog

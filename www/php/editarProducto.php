@@ -9,16 +9,18 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $origen = $_POST['origen'] ?? 'jerseys';
+    $origen = validarCadena(filter_input(INPUT_POST, 'origen'));
 
-    $cod_producto = filter_input(INPUT_POST, 'cod_producto');
+    $cod_producto = validarCodigoProducto(filter_input(INPUT_POST, 'cod_producto'));
     $nombre = validarNombre(filter_input(INPUT_POST, 'nombre'));
     $modelo = validarModelo(filter_input(INPUT_POST, 'modelo'));
-    $descripcion = trim($_POST['descripcion']);
-    $precioProducto = validarPrecio(filter_input(INPUT_POST,'precio'));
-    $conexionBaseDatos = Conexion::conexionBD();
+    $descripcion = validarCadena(filter_input(INPUT_POST, 'descripcion'));
+    $precioProducto = validarPrecio(filter_input(INPUT_POST, 'precio'));
 
+    $conexionBaseDatos = Conexion::conexionBD();
     $nuevaImagen = '';
+
+    // Procesar imagen si se ha subido
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
         $nombreImagen = basename($_FILES['imagen']['name']);
         $rutaDestino = 'imagenes/productos/' . $nombreImagen;
@@ -38,13 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: ../' . $origen . '.php');
             exit();
         }
+
         $nuevaImagen = $rutaDestino;
     }
 
     if (!$cod_producto || !$nombre || !$modelo || !$descripcion || !$precioProducto) {
         $_SESSION['error'] = "Alguno de los campos introducidos no son correctos.";
-        header('Location: ../' . $origen . '.php');
-        exit();
     } else {
         if ($nuevaImagen !== '') {
             $editarProducto = $conexionBaseDatos->prepare("UPDATE Productos SET nombre = ?, modelo = ?, descripcion = ?, precio = ?, imagen = ? WHERE cod_producto = ?");
@@ -58,14 +59,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($editarProducto->affected_rows > 0) {
                 $_SESSION['mensaje'] = "Producto editado correctamente.";
             } else {
-                $_SESSION['error'] = "No se realizaron los cambios porque los datos de los campos son iguales";
+                $_SESSION['error'] = "No se realizaron los cambios porque los datos de los campos son iguales.";
             }
         } else {
             $_SESSION['error'] = "Error al editar el producto.";
         }
 
-        header('Location: ../' . $origen . '.php');
-        exit();
+        $editarProducto->close();
     }
+
+    Conexion::cerrarConexionBD();
+
+    header('Location: ../' . $origen . '.php');
+    exit();
 }
 ?>

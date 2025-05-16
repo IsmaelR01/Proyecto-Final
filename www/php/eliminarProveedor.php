@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'Conexion.php';
+include_once 'funciones_validar.php';
 
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     header('Location: ../index.php');
@@ -9,7 +10,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $cif = trim($_POST['CIF']);
+    $cif = validarCif(filter_input(INPUT_POST, 'CIF'));
     $conexionBaseDatos = Conexion::conexionBD();
 
     $eliminarProveedor = $conexionBaseDatos->prepare("DELETE FROM Proveedores WHERE CIF = ?");
@@ -17,14 +18,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $eliminarProveedor->execute();
-        $_SESSION['mensaje'] = "Proveedor eliminado correctamente.";
+
+        if ($eliminarProveedor->affected_rows > 0) {
+            $_SESSION['mensaje'] = "Proveedor eliminado correctamente.";
+        } else {
+            $_SESSION['error'] = "No se ha eliminado ningún proveedor. Es posible que el CIF no exista o tenga productos asociados.";
+        }
+
     } catch (Exception $e) {
         if (str_contains($e->getMessage(), 'a foreign key constraint fails')) {
             $_SESSION['error'] = "No se puede eliminar el proveedor porque tiene productos asignados.";
         } else {
-            $_SESSION['error'] = "Ocurrió un error al eliminar el proveedor.";
+            $_SESSION['error'] = "Error al eliminar el proveedor.";
         }
     }
+
+    // Cerrar consulta y conexión
+    $eliminarProveedor->close();
+    Conexion::cerrarConexionBD();
+
     header('Location: ../quienesSomos.php');
     exit();
 }

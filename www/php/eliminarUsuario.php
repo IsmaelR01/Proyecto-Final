@@ -17,10 +17,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $eliminarUsuario->bind_param("s", $dniUsuarioSeleccionado);
 
     if ($eliminarUsuario->execute()) {
-        $_SESSION['mensaje'] = "Usuario eliminado correctamente.";
+        if ($eliminarUsuario->affected_rows > 0) {
+            $_SESSION['mensaje'] = "Usuario eliminado correctamente.";
+        } else {
+            $_SESSION['error'] = "No se ha eliminado ningún usuario. El DNI no existe.";
+        }
     } else {
-        $_SESSION['error'] = "Error al eliminar el usuario.";
+        $_SESSION['error'] = "Error al ejecutar la eliminación del usuario.";
     }
+
+    // Cerrar consulta y conexión
+    $eliminarUsuario->close();
+    Conexion::cerrarConexionBD();
+
     $_SESSION['accion'] = 'eliminar';
     $_SESSION['seleccionUsuario'] = $dniUsuarioSeleccionado;
     header('Location: administrarUsuarios.php');

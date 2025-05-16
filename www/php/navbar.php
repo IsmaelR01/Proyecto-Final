@@ -30,6 +30,9 @@
                         <?php } 
                         if($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'cliente') { ?>
                             <li><a class="dropdown-item" href="php/cuenta.php">Mi cuenta</a></li>
+                        <?php } 
+                        if($_SESSION['rol'] === 'cliente') { ?>
+                            <li><a class="dropdown-item" href="php/pedidos.php">Mis pedidos</a></li>
                         <?php } ?>
                         <li><a class="dropdown-item text-danger" href="php/logout.php">Cerrar sesión</a></li>
                     </ul>

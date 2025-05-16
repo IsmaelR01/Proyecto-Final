@@ -20,8 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$cif || !$nombreProveedor || !$direccionProveedor || !$telefonoProveedor) {
         $_SESSION['error'] = "Alguno de los campos introducidos no son correctos.";
-        header('Location: ../quienesSomos.php');
-        exit();
     } else {
         $editarProveedor = $conexionBaseDatos->prepare("UPDATE Proveedores SET nombre_proveedor = ?, direccion_proveedor = ?, telefono = ? WHERE CIF = ?");
         $editarProveedor->bind_param("ssss", $nombreProveedor, $direccionProveedor, $telefonoProveedor, $cif);
@@ -33,11 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['error'] = "No se realizaron cambios porque los datos de los campos son iguales.";
             }
         } else {
-            $_SESSION['error'] = "Error al editar el proveedor";
+            $_SESSION['error'] = "Error al editar el proveedor.";
         }
 
-        header('Location: ../quienesSomos.php');
-        exit();
+        // Cerrar la consulta
+        $editarProveedor->close();
     }
+
+    Conexion::cerrarConexionBD();
+
+    header('Location: ../quienesSomos.php');
+    exit();
 }
 ?>

@@ -31,9 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['mensaje_error'] = "No se realizaron cambios porque los datos de los campos son iguales.";
             }
         } else {
-            $_SESSION['mensaje_error'] = "Error al editar el usuario";
+            $_SESSION['mensaje_error'] = "Error al editar el usuario.";
         }
+
+        $editarUsuario->close();
     }
+
+    Conexion::cerrarConexionBD();
+
     $_SESSION['accion'] = 'editar';
     $_SESSION['seleccionUsuario'] = $dniUsuarioSeleccionado;
 

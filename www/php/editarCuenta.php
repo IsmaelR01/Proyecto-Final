@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $dniUsuarioSeleccionado = $_SESSION['identificadorUsuario'];
     $nombreUsuario = validarUsuario(filter_input(INPUT_POST, 'nombre'));
-    $direccion = validarDireccion(filter_input(INPUT_POST,'direccion'));
+    $direccion = validarDireccion(filter_input(INPUT_POST, 'direccion'));
     $contrasenaActual = filter_input(INPUT_POST, 'contrasena_antigua');
     $contrasenaNueva = filter_input(INPUT_POST, 'contrasena_nueva');
     $conexionBaseDatos = Conexion::conexionBD();
@@ -40,94 +40,91 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nuevaImagen = $rutaDestino;
     }
 
-    // Validar campos que no son contraseñas
     if (!$nombreUsuario || !$direccion) {
         $_SESSION['error'] = "Alguno de los campos introducidos no son correctos.";
-        header('Location: cuenta.php');
-        exit();
     } else {
-        // Verificar si el nombre de usuario ya existe en la base de datos
+        // Verifica si el nombre de usuario ya está en uso
         $consultaUsuarioExistente = $conexionBaseDatos->prepare("SELECT COUNT(*) FROM Usuarios WHERE nombre_usuario = ? AND dni != ?");
         $consultaUsuarioExistente->bind_param("ss", $nombreUsuario, $dniUsuarioSeleccionado);
         $consultaUsuarioExistente->execute();
         $resultadoUsuarioExistente = $consultaUsuarioExistente->get_result();
         $existeUsuario = $resultadoUsuarioExistente->fetch_row()[0];
+        $consultaUsuarioExistente->close();
 
         if ($existeUsuario > 0) {
             $_SESSION['error'] = "El nombre de usuario ya está en uso. Por favor, elige otro nombre.";
-            header('Location: cuenta.php');
-            exit();
-        }
-
-        // Solo verificar la contraseña si el campo de "contraseña actual" y "contraseña nueva" están presentes
-        if ($contrasenaActual && $contrasenaNueva) {
-            $consultaContrasenaActual = $conexionBaseDatos->prepare("SELECT nombre_usuario, clave FROM Usuarios WHERE dni = ?");
-            $consultaContrasenaActual->bind_param("s", $dniUsuarioSeleccionado);
-            $consultaContrasenaActual->execute();
-            $resultado = $consultaContrasenaActual->get_result();
-
-            if($resultado->num_rows > 0) {
-                $resultadoContrasenaActual = $resultado->fetch_assoc();
-                $contrasenaActualCifrada = $resultadoContrasenaActual['clave'];
-
-                // Verificar si la contraseña actual proporcionada es correcta
-                if (password_verify($contrasenaActual, $contrasenaActualCifrada)) {
-                    // Si se proporciona una nueva contraseña, cifrarla
-                    $contrasenaNuevaCifrada = password_hash($contrasenaNueva, PASSWORD_DEFAULT);
-                    
-                    // Actualizar usuario, incluyendo la nueva contraseña si fue proporcionada
-                    if ($nuevaImagen !== '') {
-                        $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, clave = ?, direccion = ?, perfil = ? WHERE dni = ?");
-                        $editarUsuario->bind_param("sssss", $nombreUsuario, $contrasenaNuevaCifrada, $direccion, $nuevaImagen, $dniUsuarioSeleccionado);
-                    } else {
-                        $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, clave = ?, direccion = ? WHERE dni = ?");
-                        $editarUsuario->bind_param("ssss", $nombreUsuario, $contrasenaNuevaCifrada, $direccion, $dniUsuarioSeleccionado);
-                    }
-                    
-                    // Si la consulta se ejecuta correctamente, actualizar sesión y dar mensaje de éxito
-                    if ($editarUsuario->execute()) {
-                        if ($editarUsuario->affected_rows > 0) {
-                            if ($nuevaImagen !== '') {
-                                $_SESSION['perfil'] = $nuevaImagen;
-                            }
-                            $_SESSION['mensaje'] = "Se han guardado correctamente los cambios.";
-                        } else {
-                            $_SESSION['error'] = "No se han realizado cambios.";
-                        }
-                    } else {
-                        $_SESSION['error'] = "Error al guardar los cambios.";
-                    }
-                } else {
-                    $_SESSION['error'] = "La contraseña actual es incorrecta.";
-                }
-            } else {
-                $_SESSION['error'] = "No se pudo encontrar el usuario.";
-            }
         } else {
-            // Si no se está cambiando la contraseña, solo actualizar nombre y dirección
-            if ($nuevaImagen !== '') {
-                $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, direccion = ?, perfil = ? WHERE dni = ?");
-                $editarUsuario->bind_param("ssss", $nombreUsuario, $direccion, $nuevaImagen, $dniUsuarioSeleccionado);
-            } else {
-                $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, direccion = ? WHERE dni = ?");
-                $editarUsuario->bind_param("sss", $nombreUsuario, $direccion, $dniUsuarioSeleccionado);
-            }
+            // Cambianddo la contraseña, introduciendo la contraseña actual y la contraseña antigua
+            if ($contrasenaActual && $contrasenaNueva) {
+                $consultaContrasenaActual = $conexionBaseDatos->prepare("SELECT nombre_usuario, clave FROM Usuarios WHERE dni = ?");
+                $consultaContrasenaActual->bind_param("s", $dniUsuarioSeleccionado);
+                $consultaContrasenaActual->execute();
+                $resultado = $consultaContrasenaActual->get_result();
 
-            if ($editarUsuario->execute()) {
-                if ($editarUsuario->affected_rows > 0) {
-                    if ($nuevaImagen !== '') {
-                        $_SESSION['perfil'] = $nuevaImagen;
+                if ($resultado->num_rows > 0) {
+                    $resultadoContrasenaActual = $resultado->fetch_assoc();
+                    $contrasenaActualCifrada = $resultadoContrasenaActual['clave'];
+
+                    if (password_verify($contrasenaActual, $contrasenaActualCifrada)) {
+                        $contrasenaNuevaCifrada = password_hash($contrasenaNueva, PASSWORD_DEFAULT);
+
+                        if ($nuevaImagen !== '') {
+                            $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, clave = ?, direccion = ?, perfil = ? WHERE dni = ?");
+                            $editarUsuario->bind_param("sssss", $nombreUsuario, $contrasenaNuevaCifrada, $direccion, $nuevaImagen, $dniUsuarioSeleccionado);
+                        } else {
+                            $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, clave = ?, direccion = ? WHERE dni = ?");
+                            $editarUsuario->bind_param("ssss", $nombreUsuario, $contrasenaNuevaCifrada, $direccion, $dniUsuarioSeleccionado);
+                        }
+
+                        if ($editarUsuario->execute()) {
+                            if ($editarUsuario->affected_rows > 0) {
+                                if ($nuevaImagen !== '') {
+                                    $_SESSION['perfil'] = $nuevaImagen;
+                                }
+                                $_SESSION['mensaje'] = "Se han guardado correctamente los cambios.";
+                            } else {
+                                $_SESSION['error'] = "No se han realizado cambios.";
+                            }
+                        } else {
+                            $_SESSION['error'] = "Error al guardar los cambios.";
+                        }
+                        $editarUsuario->close();
+                    } else {
+                        $_SESSION['error'] = "La contraseña actual es incorrecta.";
                     }
-                    $_SESSION['mensaje'] = "Se han guardado correctamente los cambios.";
                 } else {
-                    $_SESSION['error'] = "No se han realizado cambios.";
+                    $_SESSION['error'] = "No se pudo encontrar el usuario.";
                 }
+                $consultaContrasenaActual->close();
             } else {
-                $_SESSION['error'] = "Error al guardar los cambios.";
+                // Sin cambiar la contraseña, dejando los campos de contraseña vacíos
+                if ($nuevaImagen !== '') {
+                    $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, direccion = ?, perfil = ? WHERE dni = ?");
+                    $editarUsuario->bind_param("ssss", $nombreUsuario, $direccion, $nuevaImagen, $dniUsuarioSeleccionado);
+                } else {
+                    $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, direccion = ? WHERE dni = ?");
+                    $editarUsuario->bind_param("sss", $nombreUsuario, $direccion, $dniUsuarioSeleccionado);
+                }
+
+                if ($editarUsuario->execute()) {
+                    if ($editarUsuario->affected_rows > 0) {
+                        if ($nuevaImagen !== '') {
+                            $_SESSION['perfil'] = $nuevaImagen;
+                        }
+                        $_SESSION['mensaje'] = "Se han guardado correctamente los cambios.";
+                    } else {
+                        $_SESSION['error'] = "No se han realizado cambios.";
+                    }
+                } else {
+                    $_SESSION['error'] = "Error al guardar los cambios.";
+                }
+                $editarUsuario->close();
             }
         }
     }
-    
+
+    Conexion::cerrarConexionBD();
+
     header('Location: cuenta.php');
     exit();
 }

@@ -81,6 +81,10 @@ main {
     background-color: #0e6c7b;
 }
 
+.dropdown-item:hover {
+    background-color:aquamarine
+}
+
 .breadcrumb {
     font-size: 1.75rem; 
 }

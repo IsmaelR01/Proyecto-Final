@@ -47,7 +47,10 @@ CREATE TABLE IF NOT EXISTS Productos (
 CREATE TABLE IF NOT EXISTS Compran (
     dni VARCHAR(9),
     cod_producto CHAR(5),
-    PRIMARY KEY (dni, cod_producto),
+    fecha_compra TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    cantidad SMALLINT NOT NULL DEFAULT 1,
+    subtotal DECIMAL(5,2),
+    PRIMARY KEY (dni, cod_producto, fecha_compra),
     FOREIGN KEY (dni) REFERENCES Usuarios(dni) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (cod_producto) REFERENCES Productos(cod_producto) ON UPDATE CASCADE ON DELETE CASCADE
 );

@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Madrid');
 session_start();
 require_once 'php/Conexion.php';
 $conexionBaseDatos = Conexion::conexionBD();
@@ -41,19 +42,19 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
             </ol>
         </nav>
 
-        <?php if (isset($_SESSION['mensaje'])): ?>
+        <?php if (isset($_SESSION['mensaje'])) { ?>
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 <?php echo $_SESSION['mensaje']; unset($_SESSION['mensaje']); ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (isset($_SESSION['error'])): ?>
+        <?php if (isset($_SESSION['error'])) { ?>
             <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
                 <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
 
         <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
@@ -99,11 +100,11 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                     <label for="cif" class="form-label">Proveedor</label>
                                     <select name="cif" id="cif" class="form-select">
                                         <option value="" selected disabled>Selecciona un proveedor</option>
-                                        <?php while ($proveedor = $consultaProveedores->fetch_assoc()): ?>
+                                        <?php while ($proveedor = $consultaProveedores->fetch_assoc()) { ?>
                                             <option value="<?php echo htmlspecialchars($proveedor['CIF']); ?>">
                                                 <?php echo htmlspecialchars($proveedor['nombre_proveedor']) . " (" . htmlspecialchars($proveedor['CIF']) . ")"; ?>
                                             </option>
-                                        <?php endwhile; ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
 
@@ -129,6 +130,8 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
             <?php while ($producto = $resultado->fetch_assoc()) {
                 $identificadorModal = "modal_" . htmlspecialchars($producto['cod_producto']);
             ?>
+                <!-- Aquí empieza la card y se muestra la información básica, 
+                 solo se mostrará el botón más información si se ha iniciado sesión tanto para los clientes como los administradores -->
                 <div class="card" style="width: 18rem;">
                     <img src="<?php echo htmlspecialchars($producto['imagen']) ?>" class="card-img-top" alt="Imagen del producto">
                     <div class="card-body">
@@ -136,9 +139,18 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                         <p class="card-text"><?php echo htmlspecialchars($producto['nombre']); ?></p>
                         <p class="card-text"><?php echo htmlspecialchars($producto['precio']). " €"; ?></p>
                         <?php if (isset($_SESSION['usuario']) && (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'cliente' || $_SESSION['rol'] === 'admin'))) { ?>
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#<?php echo $identificadorModal; ?>">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<?php echo $identificadorModal; ?>">
                             Más información
-                        </button>
+                        </button><br><br>
+                        <?php }
+                        if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'cliente') { ?>
+                            <form action="php/compras.php" method="POST">
+                                <input type="hidden" name="cod_producto" value="<?php echo htmlspecialchars($producto['cod_producto']); ?>">
+                                <input type="hidden" name="origen" value="jerseys">
+                                <label for="cantidad_<?php echo htmlspecialchars($producto['cod_producto']); ?>">Cantidad</label>
+                                <input type="number" class="form-control mb-2" name="cantidad" id="cantidad_<?php echo htmlspecialchars($producto['cod_producto']); ?>" min="1" value="1" required>
+                                <button type="submit" class="btn btn-success w-100">Comprar</button>
+                            </form>
                         <?php } 
                         if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
                             <div class="d-flex gap-1 mt-2">
@@ -184,6 +196,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                 </div>
                             </div>
                         </div>
+                        <!-- Final Modal Mostrar Información -->
 
                         <!-- Modal Editar Producto -->
                         <div class="modal fade" id="editar_<?php echo $identificadorModal; ?>" tabindex="-1" aria-labelledby="editar_<?php echo $identificadorModal; ?>" aria-hidden="true">
@@ -230,6 +243,8 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                 </div>
                             </div>
                         </div>
+                        <!-- Final Modal Editar Producto -->
+                        <!-- Para evitar problemas con la carga le digo que me cargue los archivos cuando estén listos -->
                         <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') {?>
                             <script>
                                 document.addEventListener('DOMContentLoaded', function () {
