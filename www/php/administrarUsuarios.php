@@ -4,7 +4,7 @@ require_once 'Conexion.php';
 include_once 'funciones_validar.php';
 $conexionBaseDatos = Conexion::conexionBD();
 
-if (isset($_SESSION['usuario']) && $_SESSION['rol'] !== 'admin') {
+if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     header('Location: ../index.php');
     exit();
 }

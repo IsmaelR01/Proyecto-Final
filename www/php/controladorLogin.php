@@ -8,7 +8,7 @@ $conexionBaseDatos = Conexion::conexionBD();
 
 if (filter_has_var(INPUT_POST, 'sesion')) {
     $usuario = validarUsuario(filter_input(INPUT_POST, 'usuario'));
-    $contrasena = filter_input(INPUT_POST, 'contrasena');
+    $contrasena = validarContrasena(filter_input(INPUT_POST, 'contrasena'));
 
     if (!$usuario || !$contrasena) {
         $mensaje = "El usuario o la contraseña no cumplen con los requisitos o los campos están vacíos.";

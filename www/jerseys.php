@@ -18,23 +18,13 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
     <title>Productos - Jerseys</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        .card {
-            border: 2px solid #111;
-            transition: box-shadow 0.3s ease, border 0.3s ease;
-        }
-
-        .card:hover {
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            border: 2px solid #0659b8;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/estiloJerseysChaquetas.css">
 </head>
 <body>
     <?php include 'php/navbar.php'; ?>  
 
-    <main class="container">
+    <main class="container my-5">
+        <h2 class="section-title">Productos</h2>
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>

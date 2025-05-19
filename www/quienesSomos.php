@@ -23,13 +23,18 @@ $resultado = $consultaProveedores->get_result();
     <main class="container my-5">
 
         <h2 class="section-title">Quiénes Somos</h2>
-
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quienes Somos</li>
+            </ol>
+        </nav>
         <div class="col-12 col-md-8 mx-auto mb-5 px-3">
             <div class="card shadow-sm rounded-4 bg-light border-0">
                 <div class="card-body text-center">
                     <h4 class="card-title mb-3">Nuestra Historia</h4>
                     <p class="card-text lead">
-                    Fundada en 2015, <strong>Mundo Punto</strong> nació con el propósito de ofrecer prendas exclusivas de alta calidad en 
+                    Fundada en 2023, <strong>Mundo Punto</strong> nació con el propósito de ofrecer prendas exclusivas de alta calidad en 
                     <strong>géneros de punto</strong>. Desde nuestra pequeña tienda online, estamos intentando expandir nuestra oferta de <strong>jerseys y chaquetas 
                         </strong> elaborados con materiales seleccionados cuidadosamente, que garantizan comodidad y estilo para nuestros clientes.
                     </p>

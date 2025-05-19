@@ -17,6 +17,12 @@ session_start();
     <?php include 'php/navbar.php'; ?>
     <main class="container-fluid px-3 px-md-5 my-5">
         <h2 class="section-title">Contáctanos</h2>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.php">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contacto</li>
+            </ol>
+        </nav>
         <div class="row mb-4">
             <!-- Card: Información de contacto -->
             <div class="col-12 col-md-6 mb-3">
