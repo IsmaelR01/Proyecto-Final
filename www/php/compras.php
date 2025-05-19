@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($insertar->affected_rows > 0) {
                     $_SESSION['mensaje'] = "¡Compra realizada con éxito!";
                 } else {
-                    $_SESSION['error'] = "No se pudo completar la compra. Intente nuevamente.";
+                    $_SESSION['error'] = "No se pudo completar la compra. Intentalo de nuevo.";
                 }
             } else {
                 $_SESSION['error'] = "Error al registrar la compra.";

@@ -82,7 +82,7 @@ main {
 }
 
 .dropdown-item:hover {
-    background-color:aquamarine
+    background-color:aquamarine;
 }
 
 .breadcrumb {

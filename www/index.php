@@ -101,6 +101,11 @@ $resultado = $consultaNovedades->get_result();
                     </button>
                 </div>
             </div>
+        </div><br>
+
+        <div class="d-flex justify-content-center gap-3">
+            <a href="jerseys.php" class="btn btn-primary btn-lg">Acceso a jerseys</a>
+            <a href="chaquetas.php" class="btn btn-primary btn-lg">Acceso a chaquetas</a>
         </div>
 
         

@@ -42,7 +42,7 @@ function validarFormularioEditarProducto(evento, codProducto) {
         valido = false;
     }
 
-    return true;
+    return valido;
 }
 
 function validarEditarNombre(codProducto) {

@@ -11,7 +11,7 @@ if (!isset($_SESSION['identificadorUsuario'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $dniUsuarioSeleccionado = $_SESSION['identificadorUsuario'];
-    $nombreUsuario = validarUsuario(filter_input(INPUT_POST, 'nombre'));
+    $nombreUsuario = validarUsuario(filter_input(INPUT_POST, 'nombreUsuario'));
     $direccion = validarDireccion(filter_input(INPUT_POST, 'direccion'));
     $contrasenaActual = filter_input(INPUT_POST, 'contrasena_antigua');
     $contrasenaNueva = filter_input(INPUT_POST, 'contrasena_nueva');

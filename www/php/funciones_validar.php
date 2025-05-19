@@ -149,6 +149,6 @@ function validarTelefono($telefono) {
 
 function validarDireccion($direccion) {
     $direccion = validarCadena($direccion);
-    $patron = '/^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ\s,\.]+(\d{1,5})?(\s?[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+)?(\s?\d{5})?(\s?[a-zA-Z\s]+)?$/';
+    $patron = '/^(Calle|Avenida|Plaza)\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+,\s*\d{1,4},\s*\d{5}\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+(\s*\([a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+\))?$/';
     return preg_match($patron, $direccion) ? $direccion : false;
 }

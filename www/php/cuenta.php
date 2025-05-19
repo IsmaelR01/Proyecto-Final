@@ -44,21 +44,15 @@ Conexion::cerrarConexionBD();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Cuenta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .breadcrumb {
-            font-size: 1.75rem; 
-        }
-    </style>
+    <link href="../css/estiloEditarCuenta.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
+    <!-- Enlace de volver al inicio -->
+    <a href="../index.php" class="volver-menu-principal">
+        ← Volver al Inicio
+     </a>
     <div class="container py-5">
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="../index.php">Inicio</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Editar Cuenta</li>
-            </ol>
-        </nav>
         <?php if (isset($_SESSION['mensaje'])): ?>
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 <?php echo $_SESSION['mensaje'];
@@ -82,28 +76,28 @@ Conexion::cerrarConexionBD();
                     </div>
                     <div class="card-body">
                         <?php while ($resultadoUsuario = $resultado->fetch_assoc()) { ?>
-                            <form method="POST" action="editarCuenta.php" id="formularioEditar" enctype="multipart/form-data">
+                            <form method="POST" action="editarCuenta.php" id="formularioEditarCuenta" enctype="multipart/form-data">
                                 <input type="hidden" name="usuarioLogueado" value="<?php echo htmlspecialchars($resultadoUsuario['dni']) ?>">
 
                                 <div class="mb-3 text-center">
                                     <label class="form-label">Foto de perfil:</label><br>
                                     <img src="../<?php echo htmlspecialchars($_SESSION['perfil'] ?? 'imagenes/fotosPerfil/emoticono.jpg'); ?>" alt="Foto de perfil" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover;">
-                                    <input type="file" class="form-control form-control-sm mt-2" name="perfil" accept="image/jpeg, image/png, image/jpg">
+                                    <input type="file" class="form-control form-control-sm mt-2" id= "editarPerfil" name="perfil" accept="image/jpeg, image/png, image/jpg">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Nombre de usuario:</label>
-                                    <input type="text" class="form-control form-control-sm" name="nombre" value="<?php echo htmlspecialchars($resultadoUsuario['nombre_usuario']) ?>">
+                                    <input type="text" class="form-control form-control-sm" id="editarNombreUsuario" name="nombreUsuario" value="<?php echo htmlspecialchars($resultadoUsuario['nombre_usuario']) ?>">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Introduce la contraseña actual</label>
-                                    <input type="password" class="form-control form-control-sm" name="contrasena_antigua">
+                                    <input type="password" class="form-control form-control-sm" id="contrasena_antigua" name="contrasena_antigua">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Introduce la contraseña nueva</label>
-                                    <input type="password" class="form-control form-control-sm" name="contrasena_nueva">
+                                    <input type="password" class="form-control form-control-sm" id="contrasena_nueva" name="contrasena_nueva">
                                 </div>
 
                                 <div class="mb-3">
@@ -113,11 +107,15 @@ Conexion::cerrarConexionBD();
 
                                 <div class="mb-3">
                                     <label class="form-label">Dirección:</label>
-                                    <input type="text" class="form-control form-control-sm" name="direccion" value="<?php echo htmlspecialchars($resultadoUsuario['direccion']) ?>">
+                                    <input type="text" class="form-control form-control-sm" id="editarDireccion" name="direccion" value="<?php echo htmlspecialchars($resultadoUsuario['direccion']) ?>">
                                 </div>
 
                                 <div class="d-grid">
                                     <button type="submit" class="btn btn-success btn-sm">Guardar Cambios</button>
+                                </div><br>
+
+                                <div id="resultadoEditarCuenta" style="color: red; margin-bottom: 10px; text-align: center;">
+
                                 </div>
                             </form>
                         <?php } ?>
@@ -127,8 +125,8 @@ Conexion::cerrarConexionBD();
         </div>
     </div>
 
-    <!-- Bootstrap JS (opcional para funcionalidades interactivas) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JavaScript/validacionFormularioEditarCuenta.js"></script>
 </body>
 
 </html>

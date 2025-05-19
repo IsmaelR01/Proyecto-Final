@@ -12,6 +12,9 @@ session_start();
     <link rel="stylesheet" href="../css/estilologinregistro.css">
 </head>
 <body>
+    <a href="../index.php" class="volver-menu-principal">
+        ← Volver al Inicio
+    </a>
     <div class="card">
         <div class="card-header">
             <h3>Registro de Usuario</h3>
@@ -58,9 +61,12 @@ session_start();
                 </div>
             </form>
         </div>
-        <div class="card-footer">
-            <p>¿Ya tienes una cuenta? <a href="login.php">Inicia sesión</a></p>
-        </div>
+        <?php if(!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') { ?>
+            <div class="card-footer">
+                <p>¿Ya tienes una cuenta? <a href="login.php">Inicia sesión</a></p>
+            </div>
+        <?php } ?>
+        
     </div>
     <script src="../JavaScript/validacionFormularioRegistro.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

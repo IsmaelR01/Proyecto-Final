@@ -3,7 +3,7 @@ date_default_timezone_set('Europe/Madrid');
 session_start();
 require_once 'Conexion.php';
 
-if (!isset($_SESSION['identificadorUsuario'])) {
+if (!isset($_SESSION['identificadorUsuario']) || $_SESSION['rol'] !== 'cliente') {
     header("Location: login.php");
     exit;
 }
@@ -21,28 +21,43 @@ $stmt = $conexion->prepare($sql);
 $stmt->bind_param("s", $dni);
 $stmt->execute();
 $resultado = $stmt->get_result();
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <title>Mis compras</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-    <link rel=stylesheet href="../css/styles.css"/>
+    <link rel="stylesheet" href="../css/pedidos.css" />
 </head>
+
 <body>
 
-    <main class="container my-4">
-        <h2>Mis compras</h2>
+    <!-- Enlace de volver al inicio -->
+    <a href="../index.php" class="volver-menu-principal">
+        ← Volver al Inicio
+    </a>
+
+    <main class="container py-5">
+        <div class="bg-white p-4 rounded shadow mb-5">
+            <h2 class="text-center m-0">Mis Pedidos</h2>
+        </div>
+
 
         <?php if ($resultado->num_rows === 0) { ?>
-            <p>No has realizado ninguna compra todavía.</p>
+            <div class="d-flex justify-content-center align-items-center" style="min-height: 300px;">
+                <div class="text-center">
+                    <div class="alert alert-info" role="alert">
+                        No has realizado ninguna compra todavía.
+                    </div>
+                </div>
+            </div>
         <?php } else { ?>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <?php while ($compra = $resultado->fetch_assoc()) { ?>
                     <div class="col">
-                        <div class="card h-100">
+                        <div class="card h-100 shadow-sm">
                             <img src="../<?php echo htmlspecialchars($compra['imagen']); ?>" class="card-img-top" alt="Imagen de <?php echo htmlspecialchars($compra['nombre']); ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo htmlspecialchars($compra['nombre']); ?></h5>
@@ -60,4 +75,5 @@ $resultado = $stmt->get_result();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

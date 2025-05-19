@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const seleccionUsuario = document.getElementById('seleccionUsuario');
     const formularioUsuario = document.getElementById('formularioUsuario');
     const formularioEditar = document.getElementById('formularioEditar');
-    const formularioEliminar = document.querySelector('form[action="eliminarUsuario.php"]');
+    const formularioEliminar = document.getElementById('formularioEliminar');
 
     const mensajeEditar = document.getElementById('mensajeEditar');
     const mensajeEliminar = document.getElementById('mensajeEliminar');
@@ -46,8 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (formularioEliminar && mensajeEliminar) {
         formularioEliminar.addEventListener('submit', function (e) {
-            const selectEliminar = document.getElementById('seleccionUsuario');
-            if (selectEliminar && selectEliminar.value === "") {
+            if (seleccionUsuario && seleccionUsuario.value === "") {
                 e.preventDefault();
                 mensajeEliminar.innerHTML = "Debes seleccionar un usuario válido para eliminar.";
             }

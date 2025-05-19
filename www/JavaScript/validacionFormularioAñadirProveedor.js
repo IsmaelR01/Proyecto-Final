@@ -89,7 +89,7 @@ function validarAñadirDireccion() {
         direccion.className = "form-control error";
         direccion.focus();
         valido = false;
-    } else if (!/^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ\s,\.]+(\d{1,5})?(\s?[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+)?(\s?\d{5})?(\s?[a-zA-Z\s]+)?$/.test(direccion.value)) {
+    } else if (!/^(Calle|Avenida|Plaza)\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+,\s*\d{1,4},\s*\d{5}\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+(\s*\([a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+\))?$/.test(direccion.value)) {
         resultado.innerHTML += "La dirección no cumple con los requisitos.<br>";
         direccion.className = "form-control error";
         valido = false;

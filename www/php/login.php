@@ -13,6 +13,10 @@ session_start();
     <link rel="stylesheet" href="../css/estilologinregistro.css">
 </head>
 <body>
+    <a href="../index.php" class="volver-menu-principal">
+        ← Volver al Inicio
+    </a>
+
     <div class="card">
         <div class="card-header">
             <h3>Iniciar Sesión</h3>
