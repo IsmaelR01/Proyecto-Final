@@ -152,3 +152,8 @@ function validarDireccion($direccion) {
     $patron = '/^(Calle|Avenida|Plaza)\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+,\s*\d{1,4},\s*\d{5}\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+(\s*\([a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+\))?$/';
     return preg_match($patron, $direccion) ? $direccion : false;
 }
+
+function validarCantidad($cantidad) {
+    $cantidad = filter_var($cantidad, FILTER_SANITIZE_NUMBER_INT);
+    return filter_var($cantidad, FILTER_VALIDATE_INT, ["options" => ["min_range" => 1, "max_range" => 5]]);
+}

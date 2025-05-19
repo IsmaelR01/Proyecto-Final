@@ -10,20 +10,20 @@ $conexionBaseDatos = Conexion::conexionBD();
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'cliente') {
     $_SESSION['error'] = "Debes iniciar sesión como cliente para realizar una compra.";
     header("Location: login.php");
-    exit;
+    exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $origen = validarCadena(filter_input(INPUT_POST, 'origen'));
-    $codProducto = filter_input(INPUT_POST, 'cod_producto');
-    $cantidad = filter_input(INPUT_POST, 'cantidad');
+    $codProducto = validarCodigoProducto(filter_input(INPUT_POST, 'cod_producto'));
+    $cantidad = validarCantidad(filter_input(INPUT_POST, 'cantidad'));
     $dniCliente = $_SESSION['identificadorUsuario']; 
 
     // Validar cantidad
-    if ($cantidad < 1) {
-        $_SESSION['error'] = "La cantidad debe ser al menos 1.";
+    if (!$cantidad) {
+        $_SESSION['error'] = "La cantidad debe ser mínimo 1 máximo 5 unidades por producto.";
         header('Location: ../' . $origen .'.php');
-        exit;
+        exit();
     }
 
     // Consultar precio actual del producto
@@ -71,9 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     Conexion::cerrarConexionBD();
 
     header('Location: ../' . $origen .'.php');
-    exit;
+    exit();
 } else {
     $_SESSION['error'] = "Faltan datos para procesar el pedido.";
     header('Location: ../index.php');
-    exit;
+    exit();
 }

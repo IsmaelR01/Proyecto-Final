@@ -5,7 +5,7 @@ require_once 'Conexion.php';
 
 if (!isset($_SESSION['identificadorUsuario']) || $_SESSION['rol'] !== 'cliente') {
     header("Location: login.php");
-    exit;
+    exit();
 }
 
 $dni = $_SESSION['identificadorUsuario'];

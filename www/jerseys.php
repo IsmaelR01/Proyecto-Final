@@ -148,7 +148,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                 <input type="hidden" name="cod_producto" value="<?php echo htmlspecialchars($producto['cod_producto']); ?>">
                                 <input type="hidden" name="origen" value="jerseys">
                                 <label for="cantidad_<?php echo htmlspecialchars($producto['cod_producto']); ?>">Cantidad</label>
-                                <input type="number" class="form-control mb-2" name="cantidad" id="cantidad_<?php echo htmlspecialchars($producto['cod_producto']); ?>" min="1" value="1" required>
+                                <input type="text" class="form-control mb-2" name="cantidad" id="cantidad_<?php echo htmlspecialchars($producto['cod_producto']); ?>" min="1" value="1" required>
                                 <button type="submit" class="btn btn-success w-100">Comprar</button>
                             </form>
                         <?php } 
