@@ -7,7 +7,7 @@ INSERT INTO Roles (tipo) VALUES
 
 
 INSERT INTO Usuarios (dni, nombre_usuario, clave, direccion, email, id_rol) VALUES
-('12345678A', 'Admin01', '$2y$12$KQnoDbyzcsg.BdIygtufZexcaWJ9JHdSuTskxVdeRkfFIczAiAnRq', 'Calle Salvador Dalí, 19, 04500 Fiñana, Almería', 'admin@gmail.com', 1),
+('12345678A', 'Admin01', '$2y$12$KQnoDbyzcsg.BdIygtufZexcaWJ9JHdSuTskxVdeRkfFIczAiAnRq', 'Calle Salvador Dalí, 19, 04500 Fiñana (Almería)', 'admin@gmail.com', 1),
 ('23456789B', 'Antonior73', '$2y$12$q0CX9LmUhxx99/F0f3hB/O/N1qVIXLVCf3fsNmanZRQgTYIFVXsEa', 'Calle Gran Vía, 23, 28013 Madrid', 'antoniorodriguez@gmail.com', 2),
 ('34567890C', 'Juang34', '$2y$12$eGzBoNIiIczg.4JUUwjPMOdIZTWHvEPqEcrqF3DJvQb.KxS1MKAU.', 'Calle de la Paz, 45, 29008 Málaga', 'juangarcia@gmail.com', 2),
 ('45678901D', 'Cristiv01', '$2y$12$2uWpwFVsp7MqCog7gV59Ie/vuzGbH1iWcM/O7X8ya95lPtSNFhdO2', 'Calle Mayor, 12, 03001 Alicante', 'cristinavallejo@gmail.com', 2),
