@@ -4,7 +4,7 @@ include_once 'funciones_validar.php';
 require_once 'Conexion.php';
 $conexionBaseDatos = Conexion::conexionBD();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (filter_has_var(INPUT_POST, 'registrar')) {
     // Primero validamos los datos ingresados
     $dni = validarDni(filter_input(INPUT_POST, 'dni'));
     $usuario = validarUsuario(filter_input(INPUT_POST, 'usuario'));

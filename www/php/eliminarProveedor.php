@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (filter_has_var(INPUT_POST, 'CIF')) {
 
     $cif = validarCif(filter_input(INPUT_POST, 'CIF'));
     $conexionBaseDatos = Conexion::conexionBD();

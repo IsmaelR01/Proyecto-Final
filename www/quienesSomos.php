@@ -129,7 +129,7 @@ $resultado = $consultaProveedores->get_result();
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" id="botonAñadirEnviarProveedor" class="btn btn-success">Guardar</button>
+                                    <button type="submit" id="botonAñadirEnviarProveedor" name="añadirEnviarProveedor" class="btn btn-success">Guardar</button>
                                     <button type="button" id="botonAñadirCancelarProveedor" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 </div><br>
 

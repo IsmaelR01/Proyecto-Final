@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (filter_has_var(INPUT_POST, 'origen')) {
     $origen = validarCadena(filter_input(INPUT_POST, 'origen'));
 
     $cod_producto = validarCodigoProducto(filter_input(INPUT_POST, 'cod_producto'));

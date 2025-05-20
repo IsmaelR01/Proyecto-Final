@@ -8,7 +8,7 @@ if (!isset($_SESSION['identificadorUsuario'])) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (filter_has_var(INPUT_POST, 'usuarioLogueado')) {
 
     $dniUsuarioSeleccionado = $_SESSION['identificadorUsuario'];
     $nombreUsuario = validarUsuario(filter_input(INPUT_POST, 'nombreUsuario'));
