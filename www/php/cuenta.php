@@ -69,7 +69,7 @@ Conexion::cerrarConexionBD();
             </div>
         <?php endif; ?>
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
                 <div class="card shadow">
                     <div class="card-header text-center bg-success text-white">
                         <h4>Editar Cuenta</h4>
@@ -82,36 +82,36 @@ Conexion::cerrarConexionBD();
                                 <div class="mb-3 text-center">
                                     <label class="form-label">Foto de perfil:</label><br>
                                     <img src="../<?php echo htmlspecialchars($_SESSION['perfil'] ?? 'imagenes/fotosPerfil/emoticono.jpg'); ?>" alt="Foto de perfil" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover;">
-                                    <input type="file" class="form-control form-control-sm mt-2" id= "editarPerfil" name="perfil" accept="image/jpeg, image/png, image/jpg">
+                                    <input type="file" class="form-control mt-2" id= "editarPerfil" name="perfil" accept="image/jpeg, image/png, image/jpg">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Nombre de usuario:</label>
-                                    <input type="text" class="form-control form-control-sm" id="editarNombreUsuario" name="nombreUsuario" value="<?php echo htmlspecialchars($resultadoUsuario['nombre_usuario']) ?>">
+                                    <input type="text" class="form-control" id="editarNombreUsuario" name="nombreUsuario" value="<?php echo htmlspecialchars($resultadoUsuario['nombre_usuario']) ?>">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Introduce la contraseña actual</label>
-                                    <input type="password" class="form-control form-control-sm" id="contrasena_antigua" name="contrasena_antigua">
+                                    <input type="password" class="form-control" id="contrasena_antigua" name="contrasena_antigua">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Introduce la contraseña nueva</label>
-                                    <input type="password" class="form-control form-control-sm" id="contrasena_nueva" name="contrasena_nueva">
+                                    <input type="password" class="form-control" id="contrasena_nueva" name="contrasena_nueva">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Email:</label>
-                                    <input type="email" class="form-control form-control-sm" name="email" value="<?php echo htmlspecialchars($resultadoUsuario['email']) ?>" disabled>
+                                    <input type="email" class="form-control" name="email" value="<?php echo htmlspecialchars($resultadoUsuario['email']) ?>" disabled>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Dirección:</label>
-                                    <input type="text" class="form-control form-control-sm" id="editarDireccion" name="direccion" value="<?php echo htmlspecialchars($resultadoUsuario['direccion']) ?>">
+                                    <input type="text" class="form-control" id="editarDireccion" name="direccion" value="<?php echo htmlspecialchars($resultadoUsuario['direccion']) ?>">
                                 </div>
 
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-success btn-sm">Guardar Cambios</button>
+                                    <button type="submit" class="btn btn-success">Guardar Cambios</button>
                                 </div><br>
 
                                 <div id="resultadoEditarCuenta" style="color: red; margin-bottom: 10px; text-align: center;">

@@ -19,7 +19,7 @@ if (filter_has_var(INPUT_POST, 'botonEditarEnviar')) {
     $conexionBaseDatos = Conexion::conexionBD();
 
     if (!$nombre || !$email || !$direccion) {
-        $_SESSION['mensaje_error'] = "Alguno de los campos introducidos no son correctos.";
+        $_SESSION['error'] = "Alguno de los campos introducidos no son correctos.";
     } else {
         $editarUsuario = $conexionBaseDatos->prepare("UPDATE Usuarios SET nombre_usuario = ?, email = ?, direccion = ? WHERE dni = ?");
         $editarUsuario->bind_param("ssss", $nombre, $email, $direccion, $dniUsuarioSeleccionado);
@@ -28,10 +28,10 @@ if (filter_has_var(INPUT_POST, 'botonEditarEnviar')) {
             if ($editarUsuario->affected_rows > 0) {
                 $_SESSION['mensaje'] = "Usuario editado correctamente.";
             } else {
-                $_SESSION['mensaje_error'] = "No se realizaron cambios porque los datos de los campos son iguales.";
+                $_SESSION['error'] = "No se realizaron cambios porque los datos de los campos son iguales.";
             }
         } else {
-            $_SESSION['mensaje_error'] = "Error al editar el usuario.";
+            $_SESSION['error'] = "Error al editar el usuario.";
         }
 
         $editarUsuario->close();

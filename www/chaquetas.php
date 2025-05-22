@@ -11,6 +11,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,8 +20,9 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/estiloJerseysChaquetas.css">
 </head>
+
 <body>
-    <?php include 'php/navbar.php'; ?>  
+    <?php include 'php/navbar.php'; ?>
 
     <main class="container my-5">
         <h2 class="section-title">Productos</h2>
@@ -33,19 +35,19 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
 
         <?php if (isset($_SESSION['mensaje'])) { ?>
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                <?php echo $_SESSION['mensaje']; unset($_SESSION['mensaje']); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?php echo $_SESSION['mensaje'];
+                unset($_SESSION['mensaje']); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        <?php } ?>
-
-        <?php if (isset($_SESSION['error'])) { ?>
+        <?php } else if (isset($_SESSION['error'])) { ?>
             <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?php echo $_SESSION['error'];
+                unset($_SESSION['error']); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php } ?>
 
-        <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
+        <?php if (isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
             <div class="d-flex gap-1 my-3">
                 <button type="button" class="btn btn-success btn-crud" data-bs-toggle="modal" data-bs-target="#añadirModal">
                     Añadir producto
@@ -101,7 +103,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" id="botonAñadirEnviar" class="btn btn-success">Añadir Producto</button>
-                                <button type="button" id="botonAñadirCancelar"class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" id="botonAñadirCancelar" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             </div><br>
                             <div id="resultadoProducto" style="color: red; margin-bottom: 10px; text-align: center;">
 
@@ -124,13 +126,13 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                     <div class="card-body">
                         <h5 class="card-title"><?php echo htmlspecialchars($producto['cod_producto']); ?></h5>
                         <p class="card-text"><?php echo htmlspecialchars($producto['nombre']); ?></p>
-                        <p class="card-text"><?php echo htmlspecialchars($producto['precio']). " €"; ?></p>
+                        <p class="card-text"><?php echo htmlspecialchars($producto['precio']) . " €"; ?></p>
                         <?php if (isset($_SESSION['usuario']) && (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'cliente' || $_SESSION['rol'] === 'admin'))) { ?>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<?php echo $identificadorModal; ?>">
-                            Más información
-                        </button><br><br>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<?php echo $identificadorModal; ?>">
+                                Más información
+                            </button><br><br>
                         <?php }
-                        if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'cliente') { ?>
+                        if (isset($_SESSION['usuario']) && $_SESSION['rol'] === 'cliente') { ?>
                             <form action="php/compras.php" method="POST">
                                 <input type="hidden" name="cod_producto" value="<?php echo htmlspecialchars($producto['cod_producto']); ?>">
                                 <input type="hidden" name="origen" value="chaquetas">
@@ -138,8 +140,8 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                 <input type="text" class="form-control mb-2" name="cantidad" id="cantidad_<?php echo htmlspecialchars($producto['cod_producto']); ?>" min="1" value="1" required>
                                 <button type="submit" class="btn btn-success w-100">Comprar</button>
                             </form>
-                        <?php }  
-                        if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
+                        <?php }
+                        if (isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
                             <div class="d-flex gap-1 mt-2">
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editar_<?php echo $identificadorModal; ?>">
                                     Editar
@@ -173,13 +175,13 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                                             <p><strong>Nombre:</strong> <?php echo htmlspecialchars($producto['nombre']); ?></p>
                                                             <p><strong>Modelo:</strong> <?php echo htmlspecialchars($producto['modelo']); ?></p>
                                                             <p><strong>Descripción:</strong> <?php echo htmlspecialchars($producto['descripcion']); ?></p>
-                                                            <p><strong>Precio:</strong> <?php echo htmlspecialchars($producto['precio']). " €"; ?></p>
+                                                            <p><strong>Precio:</strong> <?php echo htmlspecialchars($producto['precio']) . " €"; ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>   
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +199,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                                         </div>
                                         <div class="modal-body">
                                             <input type="hidden" name="cod_producto" value="<?php echo htmlspecialchars($producto['cod_producto']); ?>">
-                                            
+
                                             <div class="mb-3">
                                                 <label class="form-label">Nombre</label>
                                                 <input type="text" class="form-control" id="editarNombre_<?php echo htmlspecialchars($producto['cod_producto']); ?>" name="nombre" value="<?php echo htmlspecialchars($producto['nombre']); ?>">
@@ -232,9 +234,9 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                         </div>
                         <!-- Final Modal Editar Producto -->
                         <!-- Para evitar problemas con la carga le digo que me cargue los archivos cuando estén listos -->
-                        <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
+                        <?php if (isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
                             <script>
-                                document.addEventListener('DOMContentLoaded', function () {
+                                document.addEventListener('DOMContentLoaded', function() {
                                     iniciarEditarProducto('<?php echo htmlspecialchars($producto['cod_producto']); ?>');
                                 });
                             </script>
@@ -248,9 +250,10 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
 
     <?php include 'php/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <?php if(isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?> 
+    <?php if (isset($_SESSION['usuario']) && $_SESSION['rol'] === 'admin') { ?>
         <script src="../JavaScript/validacionFormularioAñadirProducto.js"></script>
         <script src="../JavaScript/validacionFormularioEditarProducto.js"></script>
     <?php } ?>
 </body>
+
 </html>

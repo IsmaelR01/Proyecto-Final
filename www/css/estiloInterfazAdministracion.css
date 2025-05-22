@@ -32,10 +32,18 @@ body {
     margin-bottom: 15px;
     font-size: 1rem;
     transition: all 0.3s ease;
-    width: 90%;
+    width: 60%;
     margin: 0 auto;
 }
 
 .card-body {
     background-color: rgb(195, 224, 234);
+}
+
+.error {
+    border: 2px solid red;
+}
+
+.exito {
+    border: 2px solid green;
 }

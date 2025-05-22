@@ -13,14 +13,14 @@ $conexion = Conexion::conexionBD();
 
 $sql = "SELECT c.cod_producto, p.nombre, c.cantidad, c.subtotal, c.fecha_compra, p.imagen
         FROM Compran c
-        JOIN Productos p ON c.cod_producto = p.cod_producto
+        INNER JOIN Productos p ON c.cod_producto = p.cod_producto
         WHERE c.dni = ?
         ORDER BY c.fecha_compra DESC";
 
-$stmt = $conexion->prepare($sql);
-$stmt->bind_param("s", $dni);
-$stmt->execute();
-$resultado = $stmt->get_result();
+$resultadoPedidos = $conexion->prepare($sql);
+$resultadoPedidos->bind_param("s", $dni);
+$resultadoPedidos->execute();
+$resultado = $resultadoPedidos->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -55,16 +55,16 @@ $resultado = $stmt->get_result();
             </div>
         <?php } else { ?>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                <?php while ($compra = $resultado->fetch_assoc()) { ?>
+                <?php while ($compras = $resultado->fetch_assoc()) { ?>
                     <div class="col">
                         <div class="card h-100 shadow-sm">
-                            <img src="../<?php echo htmlspecialchars($compra['imagen']); ?>" class="card-img-top" alt="Imagen de <?php echo htmlspecialchars($compra['nombre']); ?>">
+                            <img src="../<?php echo htmlspecialchars($compras['imagen']); ?>" class="card-img-top" alt="Imagen de <?php echo htmlspecialchars($compras['nombre']); ?>">
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo htmlspecialchars($compra['nombre']); ?></h5>
-                                <p class="card-text"><strong>Código:</strong> <?php echo htmlspecialchars($compra['cod_producto']); ?></p>
-                                <p class="card-text"><strong>Cantidad:</strong> <?php echo $compra['cantidad']; ?></p>
-                                <p class="card-text"><strong>Subtotal:</strong> <?php echo number_format($compra['subtotal'], 2, ',', '.'); ?> €</p>
-                                <p class="card-text"><strong>Fecha de compra:</strong> <?php echo date('d/m/Y H:i:s', strtotime($compra['fecha_compra'])); ?></p>
+                                <h5 class="card-title"><?php echo htmlspecialchars($compras['nombre']); ?></h5>
+                                <p class="card-text"><strong>Código:</strong> <?php echo htmlspecialchars($compras['cod_producto']); ?></p>
+                                <p class="card-text"><strong>Cantidad:</strong> <?php echo $compras['cantidad']; ?></p>
+                                <p class="card-text"><strong>Subtotal:</strong> <?php echo number_format($compras['subtotal'], 2, ',', '.'); ?> €</p>
+                                <p class="card-text"><strong>Fecha de compra:</strong> <?php echo date('d/m/Y H:i:s', strtotime($compras['fecha_compra'])); ?></p>
                             </div>
                         </div>
                     </div>

@@ -13,7 +13,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'cliente') {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (filter_has_var(INPUT_POST, 'cod_producto') && filter_has_var(INPUT_POST, 'cantidad')) {
     $origen = validarCadena(filter_input(INPUT_POST, 'origen'));
     $codProducto = validarCodigoProducto(filter_input(INPUT_POST, 'cod_producto'));
     $cantidad = validarCantidad(filter_input(INPUT_POST, 'cantidad'));
@@ -27,10 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Consultar precio actual del producto
-    $consulta = $conexionBaseDatos->prepare("SELECT precio FROM Productos WHERE cod_producto = ?");
-    $consulta->bind_param("s", $codProducto);
-    $consulta->execute();
-    $resultado = $consulta->get_result();
+    $consultaPrecio = $conexionBaseDatos->prepare("SELECT precio FROM Productos WHERE cod_producto = ?");
+    $consultaPrecio->bind_param("s", $codProducto);
+    $consultaPrecio->execute();
+    $resultado = $consultaPrecio->get_result();
 
     if ($resultado->num_rows === 1) {
         $producto = $resultado->fetch_assoc();
@@ -46,11 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($resultadoCompra->num_rows > 0) {
             $_SESSION['error'] = "Este producto ya ha sido comprado recientemente. Vuelva otro día.";
         } else {
-            $insertar = $conexionBaseDatos->prepare("INSERT INTO Compran (dni, cod_producto, cantidad, subtotal) VALUES (?, ?, ?, ?)");
-            $insertar->bind_param("ssid", $dniCliente, $codProducto, $cantidad, $subtotal);
+            $insertarCompra = $conexionBaseDatos->prepare("INSERT INTO Compran (dni, cod_producto, cantidad, subtotal) VALUES (?, ?, ?, ?)");
+            $insertarCompra->bind_param("ssid", $dniCliente, $codProducto, $cantidad, $subtotal);
 
-            if ($insertar->execute()) {
-                if ($insertar->affected_rows > 0) {
+            if ($insertarCompra->execute()) {
+                if ($insertarCompra->affected_rows > 0) {
                     $_SESSION['mensaje'] = "¡Compra realizada con éxito!";
                 } else {
                     $_SESSION['error'] = "No se pudo completar la compra. Intentalo de nuevo.";
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['error'] = "Error al registrar la compra.";
             }
 
-            $insertar->close();
+            $insertarCompra->close();
         }
 
         $verificarCompra->close();
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error'] = "Producto no encontrado.";
     }
 
-    $consulta->close();
+    $consultaPrecio->close();
     Conexion::cerrarConexionBD();
 
     header('Location: ../' . $origen .'.php');

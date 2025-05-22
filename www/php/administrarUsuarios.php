@@ -19,7 +19,7 @@ $resultadoUsuarios = $resultado->fetch_all(MYSQLI_ASSOC);
 
 if (filter_has_var(INPUT_POST, 'accion')) {
     $accionSeleccionada = filter_input(INPUT_POST, 'accion');
-} elseif (isset($_SESSION['accion'])) {
+} else if (isset($_SESSION['accion'])) {
     $accionSeleccionada = $_SESSION['accion'];
 }
 $esAnadir = isset($accionSeleccionada) && $accionSeleccionada === 'añadir';
@@ -32,7 +32,7 @@ if ($esAnadir) {
 }
 if (filter_has_var(INPUT_POST, 'seleccionUsuario')) {
     $usuarioSeleccionadoId = filter_input(INPUT_POST, 'seleccionUsuario');
-} elseif (isset($_SESSION['seleccionUsuario'])) {
+} else if (isset($_SESSION['seleccionUsuario'])) {
     $usuarioSeleccionadoId = $_SESSION['seleccionUsuario'];
 }
 
@@ -81,10 +81,10 @@ if (isset($usuarioSeleccionadoId)) {
                 unset($_SESSION['mensaje']); ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        <?php } else if (isset($_SESSION['mensaje_error'])) { ?>
+        <?php } else if (isset($_SESSION['error'])) { ?>
             <div class="alert alert-danger alert-dismissible fade show text-center w-75" role="alert">
-                <?php echo $_SESSION['mensaje_error'];
-                unset($_SESSION['mensaje_error']); ?>
+                <?php echo $_SESSION['error'];
+                unset($_SESSION['error']); ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php } ?>
@@ -129,15 +129,15 @@ if (isset($usuarioSeleccionadoId)) {
                             <div class="mb-3 text-center">
                                 <div class="mb-3">
                                     <label class="form-label">Nombre de usuario:</label>
-                                    <input type="text" id="editarNombreUsuario" class="form-control text-center form-control-sm" name="nombre" value="<?php echo htmlspecialchars($usuarioSeleccionado['nombre_usuario']) ?>">
+                                    <input type="text" id="editarNombreUsuario" class="form-control text-center" name="nombre" value="<?php echo htmlspecialchars($usuarioSeleccionado['nombre_usuario']) ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Email:</label>
-                                    <input type="email" id="editarEmailUsuario" class="form-control text-center form-control-sm" name="email" value="<?php echo htmlspecialchars($usuarioSeleccionado['email']) ?>">
+                                    <input type="email" id="editarEmailUsuario" class="form-control text-center" name="email" value="<?php echo htmlspecialchars($usuarioSeleccionado['email']) ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Dirección:</label>
-                                    <input type="text" id="editarDireccionUsuario" class="form-control text-center form-control-sm" name="direccion" value="<?php echo htmlspecialchars($usuarioSeleccionado['direccion']) ?>">
+                                    <input type="text" id="editarDireccionUsuario" class="form-control text-center" name="direccion" value="<?php echo htmlspecialchars($usuarioSeleccionado['direccion']) ?>">
                                 </div>
                                 <div class="d-grid w-50 mx-auto">
                                     <button type="submit" id="botonEditarEnviar" name="botonEditarEnviar" class="btn btn-success btn-sm">Guardar Cambios</button>
@@ -199,9 +199,21 @@ if (isset($usuarioSeleccionadoId)) {
                     formularioUsuario.submit();
                 });
             }
+
+            const formularioEliminar = document.getElementById('formularioEliminar');
+
+            const mensajeEliminar = document.getElementById('mensajeEliminar');
+
+            if (formularioEliminar && mensajeEliminar) {
+                formularioEliminar.addEventListener('submit', function(e) {
+                    if (seleccionUsuario && seleccionUsuario.value === "") {
+                        e.preventDefault();
+                        mensajeEliminar.innerHTML = "Debes seleccionar un usuario válido para eliminar.";
+                    }
+                });
+            }
         });
     </script>
-    <script src="../JavaScript/validacionFormulariosAdministracionUsuarios.js"></script>
     <script src="../JavaScript/validacionFormularioEditarUsuarioInterfazAdministración.js"></script>
 
 </body>

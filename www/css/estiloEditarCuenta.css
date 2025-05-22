@@ -24,3 +24,7 @@ body {
     font-weight: bold;
     z-index: 1000;
 }
+
+.form-control {
+    background-color: lightblue;
+}
