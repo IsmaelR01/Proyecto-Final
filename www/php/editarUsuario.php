@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (filter_has_var(INPUT_POST, 'botonEditarEnviar')) {
 
     $dniUsuarioSeleccionado = filter_input(INPUT_POST, 'seleccionUsuario');
     $nombre = validarUsuario(filter_input(INPUT_POST, 'nombre'));

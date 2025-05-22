@@ -140,7 +140,7 @@ if (isset($usuarioSeleccionadoId)) {
                                     <input type="text" id="editarDireccionUsuario" class="form-control text-center form-control-sm" name="direccion" value="<?php echo htmlspecialchars($usuarioSeleccionado['direccion']) ?>">
                                 </div>
                                 <div class="d-grid w-50 mx-auto">
-                                    <button type="submit" id="botonEditarEnviar" class="btn btn-success btn-sm">Guardar Cambios</button>
+                                    <button type="submit" id="botonEditarEnviar" name="botonEditarEnviar" class="btn btn-success btn-sm">Guardar Cambios</button>
                                 </div>
                             </div><br>
 
@@ -153,7 +153,7 @@ if (isset($usuarioSeleccionadoId)) {
 
                 <!-- Formulario para eliminar usuario -->
                 <?php if ($esEliminar) { ?>
-                    <form method="POST" action="eliminarUsuario.php" class="text-center">
+                    <form method="POST" action="eliminarUsuario.php" class="text-center" id="formularioEliminar">
                         <div class="mb-3 text-center">
                             <input type="hidden" name="accion" value="eliminar">
                             <input type="hidden" name="seleccionUsuario" value="<?php echo htmlspecialchars($usuarioSeleccionado['dni']) ?>">
@@ -168,7 +168,7 @@ if (isset($usuarioSeleccionadoId)) {
                             </select>
                         </div>
                         <div class="d-grid w-50 mx-auto">
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar Usuario</button>
+                            <button type="submit" name="botonEliminarEnviar" class="btn btn-danger btn-sm">Eliminar Usuario</button>
                         </div><br>
                         <div id="mensajeEliminar" style="color: red; margin-bottom: 10px;">
 
@@ -201,7 +201,7 @@ if (isset($usuarioSeleccionadoId)) {
             }
         });
     </script>
-    <script src="../JavaScript/validacionFormulariosAdministracionUsuarios.js" defer></script>
+    <script src="../JavaScript/validacionFormulariosAdministracionUsuarios.js"></script>
     <script src="../JavaScript/validacionFormularioEditarUsuarioInterfazAdministración.js"></script>
 
 </body>
