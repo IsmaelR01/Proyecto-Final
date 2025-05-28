@@ -292,7 +292,7 @@ $consultaProveedores = $conexionBaseDatos->query("SELECT CIF, nombre_proveedor F
                             <div class="modal-content">
                                 <form action="php/eliminarProducto.php" method="POST">
                                     <input type="hidden" name="cod_producto" value="<?php echo htmlspecialchars($producto['cod_producto']); ?>">
-                                    <input type="hidden" name="origen" value="jerseys">
+                                    <input type="hidden" name="origen" value="chaquetas">
 
                                     <div class="modal-header">
                                         <h5 class="modal-title">Confirmar eliminación</h5>
