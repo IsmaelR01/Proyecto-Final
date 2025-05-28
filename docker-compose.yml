@@ -1,0 +1,52 @@
+services:
+  web:
+    build: .
+    container_name: apache
+    volumes:
+      - ./www:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+  db:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 999999
+      MYSQL_USER: ismael
+      MYSQL_PASSWORD: 123456
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./basedatos:/docker-entrypoint-initdb.d 
+      - ./mysql-conf.d:/etc/mysql/conf.d
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    networks:
+      - app_network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: 999999
+      PMA_CHARSET: utf8mb4
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - app_network
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  mysql_data:

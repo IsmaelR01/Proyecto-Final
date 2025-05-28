@@ -1,0 +1,38 @@
+body {
+    background-image: url("../imagenes/imagenEditarCuenta.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    margin: 0;
+    padding: 40px 0; 
+    overflow-y: auto; 
+}
+
+.volver-menu-principal {
+    position: absolute;
+    top: 20px;
+    left: 150px;
+    text-decoration: none;
+    color: black;
+    background-color: rgb(255, 255, 255);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+.form-control {
+    background-color: lightblue;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+.exito {
+    border: 2px solid green;
+}
