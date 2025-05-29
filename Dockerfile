@@ -7,8 +7,5 @@ RUN docker-php-ext-install pdo pdo_mysql mysqli
 RUN a2enmod rewrite
 
 
-COPY ./mysql-conf.d /etc/mysql/conf.d/
-
-RUN chmod 644 /etc/mysql/conf.d/mysql-conf.cnf
 
 

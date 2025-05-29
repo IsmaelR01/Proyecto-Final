@@ -18,10 +18,10 @@ services:
       MYSQL_ROOT_PASSWORD: 999999
       MYSQL_USER: ismael
       MYSQL_PASSWORD: 123456
+      LANG: es_ES.UTF-8
     volumes:
       - mysql_data:/var/lib/mysql
       - ./basedatos:/docker-entrypoint-initdb.d 
-      - ./mysql-conf.d:/etc/mysql/conf.d
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     networks:
