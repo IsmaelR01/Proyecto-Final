@@ -1,5 +1,5 @@
 window.addEventListener('load', iniciarAñadirProducto, false);
-
+// Aquí llamo a los diferentes botones para asociarle los diferentes eventos que quiero que salten.
 function iniciarAñadirProducto() {
     const enviar = document.getElementById('botonAñadirEnviar'); 
     enviar.addEventListener('click', validarFormularioAñadirProducto, false); 
@@ -8,7 +8,7 @@ function iniciarAñadirProducto() {
     const cerrar = document.getElementById('botonAñadirCerrar');
     cerrar.addEventListener('click', resetearFormularioAñadirProducto, false); 
 }
-
+// Aquí valido el formulario con el parámetro evento para evitar enviar un formulario con campos erróneos
 function validarFormularioAñadirProducto(evento) {
     const resultado = document.getElementById('resultadoProducto');
     resultado.innerHTML = ""; 
@@ -32,7 +32,7 @@ function validarFormularioAñadirProducto(evento) {
 
     return formularioValido;
 }
-
+// Función validar código producto
 function validarAñadirCodigo() {
     const codigoProducto = document.getElementById('añadirCod_producto');
     const resultado = document.getElementById('resultadoProducto');
@@ -46,7 +46,10 @@ function validarAñadirCodigo() {
         codigoProducto.focus();
         valido = false;
     } else if (!/^[CJ][0-9]{4}$/.test(codigoProducto.value)) {
-        resultado.innerHTML += "El código debe tener máximo 5 caracteres alfanuméricos.<br>";
+        resultado.innerHTML +=
+        "El código debe tener exactamente 5 caracteres.<br>" +
+        "Debe comenzar con la letra 'C' o 'J' mayúscula.<br>" +
+        "Los siguientes 4 caracteres deben ser números del 0 al 9.<br><br>";
         codigoProducto.className = "form-control error";
         valido = false;
     } else {
@@ -55,7 +58,7 @@ function validarAñadirCodigo() {
 
     return valido;
 }
-
+// Función validar nombre
 function validarAñadirNombre() {
     const nombre = document.getElementById('añadirNombre');
     const resultado = document.getElementById('resultadoProducto');
@@ -72,7 +75,11 @@ function validarAñadirNombre() {
         nombre.className = "form-control error";
         valido = false;
     } else if (!/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/.test(nombre.value)){
-        resultado.innerHTML += "El nombre no cumple con el formato.<br>";
+        resultado.innerHTML += 
+        "El nombre no cumple con el formato.<br>" +
+        "- Cada palabra debe empezar con letra mayúscula.<br>" +
+        "- Solo se permiten letras y espacios.<br>" +
+        "- No se permiten números ni símbolos.<br><br>";
         nombre.className = "form-control error";
         valido = false;
     } else {
@@ -81,7 +88,7 @@ function validarAñadirNombre() {
 
     return valido;
 }
-
+// Funcióm validar dirección
 function validarAñadirModelo() {
     const modelo = document.getElementById('añadirModelo');
     const resultado = document.getElementById('resultadoProducto');
@@ -104,7 +111,7 @@ function validarAñadirModelo() {
 
     return valido;
 }
-
+// Función validar dirección
 function validarAñadirPrecio() {
     const precio = document.getElementById('añadirPrecio');
     const resultado = document.getElementById('resultadoProducto');
@@ -126,7 +133,7 @@ function validarAñadirPrecio() {
 
     return valido;
 }
-
+// Función validar descripción
 function validarAñadirDescripcion() {
     const descripcion = document.getElementById('añadirDescripcion');
     const resultado = document.getElementById('resultadoProducto');
@@ -144,7 +151,7 @@ function validarAñadirDescripcion() {
 
     return valido;
 }
-
+// Función validar CIF
 function validarCif() {
     const cif = document.getElementById('cif');
     const resultado = document.getElementById('resultadoProducto');
@@ -162,7 +169,7 @@ function validarCif() {
 
     return valido;
 }
-
+// Aquí borro del contenedor todos los mensajes y quito el color a los bordes de los campos
 function validarAñadirImagen() {
     const imagen = document.getElementById('añadirImagen');
     const resultado = document.getElementById('resultadoProducto');

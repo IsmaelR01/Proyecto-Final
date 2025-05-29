@@ -1,11 +1,11 @@
 window.addEventListener('load', iniciarEditarUsuario, false);
-
+// Aquí llamo al botón enviar para que dispare el evento de validar el formulario
 function iniciarEditarUsuario() {
     const enviar = document.getElementById('botonEditarEnviar');
     if(enviar) enviar.addEventListener('click', validarFormularioUsuario, false);
 
 }
-
+// Le paso como parámetro para controlar el envío del formulario
 function validarFormularioUsuario(evento) {
     const resultado = document.getElementById('resultadoEditarUsuario');
     resultado.innerHTML = "";
@@ -23,7 +23,7 @@ function validarFormularioUsuario(evento) {
 
     return valido;
 }
-
+// Función validar nombre usuario
 function validarEditarNombreUsuario() {
     let nombreUsuario = document.getElementById('editarNombreUsuario');
     let resultado = document.getElementById('resultadoEditarUsuario');
@@ -35,7 +35,12 @@ function validarEditarNombreUsuario() {
         nombreUsuario.className = "form-control error";
         devolver = false;
     } else if (!/^[A-Za-z][a-z0-9]{0,11}$/.test(nombreUsuario.value)) {
-        resultado.innerHTML += "El nombre de usuario no cumple con los requisitos.<br>";
+        resultado.innerHTML += 
+        "El nombre de usuario no cumple con los requisitos:<br>" +
+        "- Deben empezar con una letra.<br>" +
+        "- Pueden contener letras minúsculas y números.<br>" +
+        "- Longitud entre 1 y 12 caracteres.<br>" +
+        "- No se permiten símbolos ni espacios.<br><br>";
         nombreUsuario.className = "form-control error";
         devolver = false;
     } else {
@@ -43,7 +48,7 @@ function validarEditarNombreUsuario() {
     }
     return devolver;
 }
-
+// Función validar email
 function validarEditarEmailUsuario() {
     let email = document.getElementById('editarEmailUsuario');
     let resultado = document.getElementById('resultadoEditarUsuario');
@@ -63,7 +68,7 @@ function validarEditarEmailUsuario() {
     }
     return devolver;
 }
-
+// función validar dirección
 function validarEditarDireccionUsuario() {
     let direccion = document.getElementById('editarDireccionUsuario');
     let resultado = document.getElementById('resultadoEditarUsuario');
@@ -75,7 +80,10 @@ function validarEditarDireccionUsuario() {
         direccion.className = "form-control error";
         devolver = false;
     } else if (!/^(Calle|Avenida|Plaza)\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+,\s*\d{1,4},\s*\d{5}\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+(\s*\([a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+\))?$/.test(direccion.value)) {
-        resultado.innerHTML += "La dirección no cumple con los requisitos.<br>";
+        resultado.innerHTML += 
+        "La dirección no cumple con los requisitos.<br>" +
+        "[Tipo de vía] [Nombre de la vía], [Número], [Código Postal] [Ciudad] (opcional: [Provincia]). <br>" +
+        "ej: Avenida de América, 45, 28028 Madrid (Madrid). <br><br>";
         direccion.className = "form-control error";
         devolver = false;
     } else {
@@ -83,7 +91,7 @@ function validarEditarDireccionUsuario() {
     }
     return devolver;
 }
-
+// Aquí borro del contenedor todos los mensajes y quito el color a los bordes de los campos
 function resetearFormularioEditarUsuario() {
     const resultado = document.getElementById('resultadoEditarUsuario');
     resultado.innerHTML = "";

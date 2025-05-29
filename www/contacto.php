@@ -69,9 +69,9 @@ session_start();
         <div class="card shadow-sm rounded-4 bg-light border-0 my-4">
             <div class="card-body text-center">
                 <h5 class="card-title">Síguenos en redes sociales</h5>
-                <a href="#" class="btn btn-outline-primary mx-2 fs-1"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="btn btn-outline-danger mx-2 fs-1"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="btn btn-outline-dark mx-2 fs-1"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.facebook.com/?locale=es_ES" class="btn btn-outline-primary mx-2 fs-1"><i class="bi bi-facebook"></i></a>
+                <a href="https://www.instagram.com/" class="btn btn-outline-danger mx-2 fs-1"><i class="bi bi-instagram"></i></a>
+                <a href="https://x.com/?lang=es" class="btn btn-outline-dark mx-2 fs-1"><i class="bi bi-twitter"></i></a>
             </div>
         </div>
 

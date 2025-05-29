@@ -1,8 +1,10 @@
+// La función tendrá como parámetro el cif para controlar de qué producto se está realizando la edición
 function iniciarEditarProducto(codProducto) {
     const formulario = document.getElementById(`formularioEditarProducto_${codProducto}`);
     const cancelar = document.getElementById(`botonEditarCancelar_${codProducto}`);
     const cerrar = document.getElementById(`botonEditarCerrar_${codProducto}`);
-
+    /* La función de validar el formulario del producto tendrá el parámetro evento para controlar el envio de los formularios y el cod producto que se lo pasamos 
+    como id para identificar el producto que se quiere editar */
     if (formulario) {
         formulario.addEventListener('submit', function (evento) {
             const valido = validarFormularioEditarProducto(evento, codProducto);
@@ -11,7 +13,7 @@ function iniciarEditarProducto(codProducto) {
             }
         }, false);
     }
-
+    // Estos botones se encargarán de borrar los mensajes de error o éxito que apapezcan además del color de los bordes de los campos
     if (cancelar) {
         cancelar.addEventListener('click', function () {
             resetearFormularioEditarProducto(codProducto);
@@ -24,7 +26,8 @@ function iniciarEditarProducto(codProducto) {
         }, false);
     }
 }
-
+/* Todas las funciones que controlan los campos tendrán como parámetro el cod producto incluido el contenedor donde se mostrarán los mensajes para que no haya
+problemas a la hora de que el modal sepa que producto está editando y así poder mostrar los mensajes sin problemas */
 function validarFormularioEditarProducto(evento, codProducto) {
     const resultado = document.getElementById(`resultadoEditarProducto_${codProducto}`);
     resultado.innerHTML = "";
@@ -44,7 +47,7 @@ function validarFormularioEditarProducto(evento, codProducto) {
 
     return valido;
 }
-
+// Función validar nombre
 function validarEditarNombre(codProducto) {
     const nombre = document.getElementById(`editarNombre_${codProducto}`);
     const resultado = document.getElementById(`resultadoEditarProducto_${codProducto}`);
@@ -59,7 +62,11 @@ function validarEditarNombre(codProducto) {
         nombre.className = "form-control error";
         valido = false;
     } else if (!/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/.test(nombre.value)) {
-        resultado.innerHTML += "El nombre no cumple con el formato.<br>";
+        resultado.innerHTML += 
+        "El nombre no cumple con el formato.<br>" +
+        "- Cada palabra debe empezar con letra mayúscula.<br>" +
+        "- Solo se permiten letras y espacios.<br>" +
+        "- No se permiten números ni símbolos.<br><br>";
         nombre.className = "form-control error";
         valido = false;
     } else {
@@ -68,7 +75,7 @@ function validarEditarNombre(codProducto) {
 
     return valido;
 }
-
+// Función validar modelo
 function validarEditarModelo(codProducto) {
     const modelo = document.getElementById(`editarModelo_${codProducto}`);
     const resultado = document.getElementById(`resultadoEditarProducto_${codProducto}`);
@@ -88,7 +95,7 @@ function validarEditarModelo(codProducto) {
 
     return valido;
 }
-
+// Función validar precio
 function validarEditarPrecio(codProducto) {
     const precio = document.getElementById(`editarPrecio_${codProducto}`);
     const resultado = document.getElementById(`resultadoEditarProducto_${codProducto}`);
@@ -104,7 +111,7 @@ function validarEditarPrecio(codProducto) {
 
     return valido;
 }
-
+// Función validar descripción
 function validarEditarDescripcion(codProducto) {
     const descripcion = document.getElementById(`editarDescripcion_${codProducto}`);
     const resultado = document.getElementById(`resultadoEditarProducto_${codProducto}`);
@@ -120,7 +127,7 @@ function validarEditarDescripcion(codProducto) {
 
     return valido;
 }
-
+// Función validar imagen
 function validarEditarImagen(codProducto) {
     const imagen = document.getElementById(`editarImagen_${codProducto}`);
     const resultado = document.getElementById(`resultadoEditarProducto_${codProducto}`);
@@ -141,16 +148,14 @@ function validarEditarImagen(codProducto) {
 
     return valido;
 }
-
+// Aquí borro del contenedor todos los mensajes y quito el color a los bordes de los campos
 function resetearFormularioEditarProducto(codProducto) {
     const resultado = document.getElementById(`resultadoEditarProducto_${codProducto}`);
-    resultado.innerHTML = "";
+    const inputs = document.getElementsByClassName('form-control');
 
-    const formulario = document.getElementById(`formularioEditarProducto_${codProducto}`);
-    if (formulario) {
-        const inputs = formulario.querySelectorAll('.form-control');
-        inputs.forEach(input => {
-            input.classList.remove('error', 'exito');
-        });
+    resultado.innerHTML = "";
+    
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].classList.remove('error', 'exito');
     }
 }
