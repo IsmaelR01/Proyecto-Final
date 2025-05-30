@@ -79,7 +79,7 @@ $resultado = $consultaProveedores->get_result();
 
         <div class="col-md-10 mx-auto">
             <h2 class="providers-title">Nuestros Proveedores</h2>
-            <!-- aquí muestro los mensajes de error o éxito que vienen del servisor -->º
+            <!-- aquí muestro los mensajes de error o éxito que vienen del servisor -->
             <?php if (isset($_SESSION['mensaje'])) { ?>
                 <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                     <?php echo $_SESSION['mensaje'];
