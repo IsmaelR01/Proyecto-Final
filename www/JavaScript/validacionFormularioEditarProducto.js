@@ -105,6 +105,10 @@ function validarEditarPrecio(codProducto) {
         resultado.innerHTML += "El precio debe ser un número válido con hasta 2 decimales.<br>";
         precio.className = "form-control error";
         valido = false;
+    } else if (precio.value.trim() === "" || isNaN(precio.value) || Number(precio.value) < 9.99 || Number(precio.value > 999.99)) {
+        resultado.innerHTML += "El precio debe ser un número decimal, estar comprendido entre 9.99 y 999.99 y no puede estar vacío<br>";
+        precio.className = "form-control error";
+        valido = false;
     } else {
         precio.className = "form-control exito";
     }

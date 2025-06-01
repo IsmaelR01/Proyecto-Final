@@ -31,7 +31,7 @@ function validarDni() {
     let dni = document.getElementById('dni').value.toUpperCase(); // Asegura que la letra sea mayúscula
     let resultado = document.getElementById('resultado');
     let devolver = true;
-    resultado.innerHTML = ""; // Limpia mensajes anteriores
+    resultado.innerHTML = ""; 
 
     if (dni === "") {
         resultado.innerHTML += "El dni no puede estar vacío.<br>";
