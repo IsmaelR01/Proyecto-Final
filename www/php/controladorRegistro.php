@@ -18,8 +18,8 @@ if (filter_has_var(INPUT_POST, 'registrar')) {
     } else {
         try {
             // Si todos los campos son válidos, hago la consulta para verificar si el usuario ya existe
-            $consultaUsuario = $conexionBaseDatos->prepare("SELECT nombre_usuario FROM Usuarios WHERE nombre_usuario = ?");
-            $consultaUsuario->bind_param("s", $usuario); 
+            $consultaUsuario = $conexionBaseDatos->prepare("SELECT nombre_usuario FROM Usuarios WHERE nombre_usuario = ? OR dni = ?");
+            $consultaUsuario->bind_param("ss", $usuario, $dni); 
             $consultaUsuario->execute();
             $resultado = $consultaUsuario->get_result();
 
